@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import concurrent.futures
 
+N_DAYS = 1
+
 # Your GitHub personal access token
 TOKEN = "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"
 
@@ -129,14 +131,8 @@ def plot_data(top_languages, most_commits):
 
 
 def main():
-    # # Get today's date
-    # today = datetime.date.today()
-
-    # # Fetch the repos created or updated today
-    # repos = fetch_repos(today)
-
-    # make a list of dates from today to 30 days ago
-    dates = [datetime.date.today() - datetime.timedelta(days=i) for i in range(30)]
+    # make a list of dates from today to n_days ago
+    dates = [datetime.date.today() - datetime.timedelta(days=i) for i in range(N_DAYS)]
 
     # Fetch the repos created or updated on each date
     repos = [fetch_repos(date) for date in dates]
