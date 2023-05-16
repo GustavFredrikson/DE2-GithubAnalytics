@@ -8,7 +8,7 @@ import concurrent.futures
 N_DAYS = 1
 
 # Your GitHub personal access token
-TOKEN = "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"
+TOKEN = ""
 
 # The base URL for the GitHub Search Repositories API
 BASE_URL = "https://api.github.com/search/repositories"
