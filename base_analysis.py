@@ -80,7 +80,11 @@ def fetch_commits(owner, repo):
         return len(response.json())
 
     except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 409 or e.response.status_code == 404:
+        if (
+            e.response.status_code == 409
+            or e.response.status_code == 404
+            or e.response.status_code == 403
+        ):
             # The repository is empty, was deleted or only contains git submodules, skip it
             return 0
         else:
@@ -99,8 +103,10 @@ def analyze_repos(repos):
     # Fetch the number of commits for each repository
     with concurrent.futures.ThreadPoolExecutor() as executor:
         df["commits"] = list(
-            tqdm(executor.map(fetch_commits_for_row, df.to_dict("records"))),
-            total=len(df),
+            tqdm(
+                executor.map(fetch_commits_for_row, df.to_dict("records")),
+                total=len(df),
+            )
         )
 
     # Q1: Top 10 programming languages based on the number of projects developed
@@ -120,7 +126,7 @@ def plot_data(top_languages, most_commits):
     plt.title("Top 10 Programming Languages")
     plt.xlabel("Language")
     plt.ylabel("Number of Projects")
-    plt.show()
+    plt.savefig("top_10_programming_languages.png")
 
     # Q2: Plot the top 10 repositories with the most commits
     plt.figure(figsize=(10, 6))
@@ -128,7 +134,7 @@ def plot_data(top_languages, most_commits):
     plt.title("Top 10 Repositories with the Most Commits")
     plt.xlabel("Repository")
     plt.ylabel("Number of Commits")
-    plt.show()
+    plt.savefig("top_10_repositories_with_most_commits.png")
 
 
 def main():
