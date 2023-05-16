@@ -70,25 +70,33 @@ COMMITS_BASE_URL = "https://api.github.com/repos/{owner}/{repo}/commits"
 def fetch_commits(owner, repo):
     # URL for the API request
     url = COMMITS_BASE_URL.format(owner=owner, repo=repo)
+    params = {"per_page": PER_PAGE, "page": 1}
 
-    try:
-        # Make the API request
-        response = requests.get(url, headers=HEADERS)
-        response.raise_for_status()
+    commits = 0
+    while True:
+        try:
+            # Make the API request
+            response = requests.get(url, headers=HEADERS, params=params)
+            response.raise_for_status()
 
-        # Return the number of commits
-        return len(response.json())
+            # Add the number of commits from this page
+            commits += len(response.json())
 
-    except requests.exceptions.HTTPError as e:
-        if (
-            e.response.status_code == 409
-            or e.response.status_code == 404
-            or e.response.status_code == 403
-        ):
-            # The repository is empty, was deleted or only contains git submodules, skip it
-            return 0
-        else:
-            raise e
+            # If this is the last page, break out of the loop
+            if "next" not in response.links:
+                break
+
+            # Otherwise, increment the page number and continue
+            params["page"] += 1
+
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code in {403, 404, 409}:
+                # The repository is empty, was deleted or only contains git submodules, skip it
+                return commits
+            else:
+                raise e
+
+    return commits
 
 
 def fetch_commits_for_row(row):
@@ -121,18 +129,20 @@ def analyze_repos(repos):
 
 def plot_data(top_languages, most_commits):
     # Q1: Plot the top 10 programming languages
-    plt.figure(figsize=(10, 6))
-    top_languages.plot(kind="bar")
+    plt.figure()
+    plt.bar(top_languages.index, top_languages.values)
     plt.title("Top 10 Programming Languages")
     plt.xlabel("Language")
     plt.ylabel("Number of Projects")
+    plt.xticks(rotation=45)
     plt.savefig("top_10_programming_languages.png")
 
     # Q2: Plot the top 10 repositories with the most commits
-    plt.figure(figsize=(10, 6))
-    most_commits.set_index("name")["commits"].plot(kind="bar")
+    plt.figure()
+    plt.bar(most_commits["name"], most_commits["commits"])
     plt.title("Top 10 Repositories with the Most Commits")
     plt.xlabel("Repository")
+    plt.xticks(rotation=45)
     plt.ylabel("Number of Commits")
     plt.savefig("top_10_repositories_with_most_commits.png")
 
