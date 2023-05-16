@@ -4,11 +4,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import concurrent.futures
+from decouple import config
 
 N_DAYS = 1
 
-# Your GitHub personal access token
-TOKEN = ""
+# Your GitHub personal access token, from .env
+TOKEN = config("GITHUB_API_TOKEN")
 
 # The base URL for the GitHub Search Repositories API
 BASE_URL = "https://api.github.com/search/repositories"
