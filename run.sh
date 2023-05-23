@@ -1,11 +1,18 @@
 #!/bin/bash
 
-# copy the configuration file to the appropriate directory
+# Step 1: Create logs directory if it doesn't exist
+mkdir -p ~/DE2-GithubAnalytics/logs/
+
+# Step 2: Install Python packages
+pip install -r ~/DE2-GithubAnalytics/requirements.txt
+
+# Step 3: Copy the supervisord.conf to /etc/supervisor/conf.d/
 sudo cp /home/ubuntu/DE2-GithubAnalytics/supervisord.conf /etc/supervisor/supervisord.conf
 
-# reload supervisor with the new configuration
+# Step 4: Reread, update and start supervisor tasks
 sudo supervisorctl reread
-
-# update and start services
 sudo supervisorctl update
 sudo supervisorctl start all
+
+# Step 5: Print the status of supervisor tasks
+sudo supervisorctl status
