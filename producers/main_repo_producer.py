@@ -4,7 +4,6 @@ import requests
 from tqdm import tqdm
 import json
 import datetime
-from utils.github_api_utils import check_rate_limit
 import time
 
 # Configuration
@@ -22,6 +21,17 @@ client = pulsar.Client("pulsar://localhost:6650")
 
 # Pulsar producer
 producer = client.create_producer("MainGithubRepoTopic")
+
+RATE_LIMIT_URL = "https://api.github.com/rate_limit"
+
+
+def check_rate_limit():
+    response = requests.get(RATE_LIMIT_URL, headers=HEADERS)
+    response.raise_for_status()
+    data = response.json()
+    core_remaining = data["resources"]["core"]["remaining"]
+    core_reset = data["resources"]["core"]["reset"]
+    return core_remaining, core_reset
 
 
 def fetch_repos(date):
