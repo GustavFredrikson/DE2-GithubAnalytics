@@ -32,10 +32,12 @@ MarkupSafe==1.1.0
 more-itertools==4.2.0
 netifaces==0.10.4
 oauthlib==3.1.0
+pbr==5.11.1
 pexpect==4.6.0
 pulsar-client==3.1.0
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
+pycairo==1.23.0
 PyGObject==3.36.0
 PyHamcrest==1.9.0
 PyJWT==1.7.1
@@ -46,6 +48,7 @@ pyrsistent==0.15.5
 pyserial==3.4
 python-apt==2.0.0+ubuntu0.20.4.8
 python-debian===0.1.36ubuntu1
+python-decouple==3.8
 PyYAML==5.3.1
 requests==2.22.0
 requests-unixsocket==0.2.0
@@ -57,6 +60,8 @@ sos==4.4
 ssh-import-id==5.10
 supervisor==4.1.0
 systemd-python==234
+testresources==2.0.1
+tqdm==4.65.0
 Twisted==18.9.0
 ubuntu-advantage-tools==27.12
 ufw==0.36

@@ -14,19 +14,3 @@ Traceback (most recent call last):
   File "/home/ubuntu/DE2-GithubAnalytics/producers/frequently_updated_projects_producer.py", line 1, in <module>
     import pulsar
 ModuleNotFoundError: No module named 'pulsar'
-Traceback (most recent call last):
-  File "/home/ubuntu/DE2-GithubAnalytics/producers/frequently_updated_projects_producer.py", line 1, in <module>
-    import pulsar
-ModuleNotFoundError: No module named 'pulsar'
-Traceback (most recent call last):
-  File "/home/ubuntu/DE2-GithubAnalytics/producers/frequently_updated_projects_producer.py", line 1, in <module>
-    import pulsar
-ModuleNotFoundError: No module named 'pulsar'
-Traceback (most recent call last):
-  File "/home/ubuntu/DE2-GithubAnalytics/producers/frequently_updated_projects_producer.py", line 1, in <module>
-    import pulsar
-ModuleNotFoundError: No module named 'pulsar'
-Traceback (most recent call last):
-  File "/home/ubuntu/DE2-GithubAnalytics/producers/frequently_updated_projects_producer.py", line 1, in <module>
-    import pulsar
-ModuleNotFoundError: No module named 'pulsar'
