@@ -4,7 +4,7 @@
 mkdir -p ~/DE2-GithubAnalytics/logs/
 
 # Step 1.5 Remove previous logs
-rm ~/DE2-GithubAnalytics/logs/*.log
+sudo rm ~/DE2-GithubAnalytics/logs/*.log
 
 # Step 2: Install Python packages
 pip3 install -r ~/DE2-GithubAnalytics/requirements.txt
