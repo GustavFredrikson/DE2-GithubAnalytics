@@ -10,9 +10,12 @@ mkdir -p /home/ubuntu/DE2-GithubAnalytics/logs/
 rm /home/ubuntu/DE2-GithubAnalytics/logs/*.log
 
 # Step 2: Install Python packages
-pip3 freeze | xargs pip uninstall -y
+pip3 freeze | xargs pip3 uninstall -y
 
 python3 -m pip install -r /home/ubuntu/DE2-GithubAnalytics/requirements.txt
+
+# Step 2.5: Run port forwarding in the background
+microk8s kubectl port-forward pulsar-proxy-0 6650:6650 -n pulsar &
 
 # Step 3: Copy the supervisord.conf to /etc/supervisor/conf.d/
 cp /home/ubuntu/DE2-GithubAnalytics/supervisord.conf /etc/supervisor/supervisord.conf
