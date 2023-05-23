@@ -7,7 +7,7 @@ mkdir -p ~/DE2-GithubAnalytics/logs/
 rm ~/DE2-GithubAnalytics/logs/*.log
 
 # Step 2: Install Python packages
-pip install -r ~/DE2-GithubAnalytics/requirements.txt
+pip3 install -r ~/DE2-GithubAnalytics/requirements.txt
 
 # Step 3: Copy the supervisord.conf to /etc/supervisor/conf.d/
 sudo cp /home/ubuntu/DE2-GithubAnalytics/supervisord.conf /etc/supervisor/supervisord.conf
