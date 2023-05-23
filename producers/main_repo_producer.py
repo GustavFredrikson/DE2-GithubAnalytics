@@ -4,7 +4,7 @@ import requests
 from tqdm import tqdm
 import json
 import datetime
-from ..utils.rate_limit import check_rate_limit
+from ..utils.github_api_utils import check_rate_limit
 import time
 
 # Configuration
