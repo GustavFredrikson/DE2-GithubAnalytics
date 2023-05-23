@@ -8,7 +8,7 @@ from utils.github_api_utils import check_rate_limit
 import time
 
 # Configuration
-TOKEN = config("../GITHUB_API_TOKEN")
+TOKEN = config("GITHUB_API_TOKEN")
 BASE_URL = "https://api.github.com/search/repositories"
 HEADERS = {
     "Accept": "application/vnd.github+json",
