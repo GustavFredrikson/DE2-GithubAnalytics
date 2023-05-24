@@ -1,40 +1,24 @@
 import pulsar
 import json
-from collections import Counter
+import pandas as pd
 
-# Pulsar client
 client = pulsar.Client("pulsar://localhost:6650")
+consumer = client.subscribe("CommitsTopic", "my-subscription")
 
-# Pulsar consumer
-consumer = client.subscribe("FrequentlyUpdatedProjectsTopic", "projects_subscriber")
+df = pd.DataFrame(columns=["name", "commits"])
+df.set_index("name", inplace=True)
 
-# Counter for repository commits
-commits_counts = Counter()
+while True:
+    msg = consumer.receive()
+    repo = json.loads(msg.data())
 
-if __name__ == "__main__":
-    try:
-        while True:
-            # Receive messages from the FrequentlyUpdatedProjectsTopic
-            msg = consumer.receive()
+    if repo["name"] in df.index:
+        df.loc[repo["name"], "commits"] += repo["commits"]
+    else:
+        df.loc[repo["name"]] = {"commits": repo["commits"]}
 
-            try:
-                # Decode the message
-                project_info = json.loads(msg.data())
+    most_commits = df.nlargest(10, "commits")
+    print("Top 10 frequently updated projects: ", most_commits)
+    consumer.acknowledge(msg)
 
-                # Update the commits counts
-                commits_counts[project_info["name"]] += project_info["commits"]
-
-                # Acknowledge successful processing of the message
-                consumer.acknowledge(msg)
-
-            except:
-                # Message failed to process
-                consumer.negative_acknowledge(msg)
-
-    finally:
-        # Print the top 10 repositories with the most commits
-        for repo, count in commits_counts.most_common(10):
-            print(f"{repo}: {count}")
-
-        # Close the client
-        client.close()
+client.close()

@@ -1,40 +1,44 @@
 import pulsar
+import requests
 import json
+from decouple import config
 
-# Pulsar client
+TOKEN = config("GITHUB_API_TOKEN")
+HEADERS = {
+    "Accept": "application/vnd.github+json",
+    "Authorization": f"Bearer {TOKEN}",
+    "X-GitHub-Api-Version": "2022-11-28",
+}
+COMMITS_BASE_URL = "https://api.github.com/repos/{owner}/{repo}/commits"
+PER_PAGE = 100
+
 client = pulsar.Client("pulsar://localhost:6650")
+consumer = client.subscribe("FrequentlyUpdatedProjectsTopic", "my-subscription")
+producer = client.create_producer("CommitsTopic")
 
-# Pulsar consumers
-main_consumer = client.subscribe("MainGithubRepoTopic", "main_subscriber")
+while True:
+    msg = consumer.receive()
+    repo = json.loads(msg.data())
 
-# Pulsar producer
-producer = client.create_producer("FrequentlyUpdatedProjectsTopic")
+    url = COMMITS_BASE_URL.format(owner=repo["owner"]["login"], repo=repo["name"])
+    params = {"per_page": PER_PAGE, "page": 1}
 
-
-if __name__ == "__main__":
     try:
+        commits = 0
         while True:
-            # Receive messages from the MainGitHubRepoTopic
-            msg = main_consumer.receive()
+            response = requests.get(url, headers=HEADERS, params=params)
+            response.raise_for_status()
+            commits += len(response.json())
+            if "next" not in response.links:
+                break
+            params["page"] += 1
 
-            try:
-                # Decode the message
-                repo = json.loads(msg.data())
+        repo_with_commits = repo
+        repo_with_commits["commits"] = commits
+        producer.send(json.dumps(repo_with_commits).encode("utf-8"))
+        consumer.acknowledge(msg)
 
-                # Extract and send the relevant information
-                project_info = {
-                    "name": repo["name"],
-                    "commits": repo["commits"],
-                }
-                producer.send(json.dumps(project_info).encode("utf-8"))
+    except requests.exceptions.HTTPError as e:
+        consumer.acknowledge(msg)
 
-                # Acknowledge successful processing of the message
-                main_consumer.acknowledge(msg)
-
-            except:
-                # Message failed to process
-                main_consumer.negative_acknowledge(msg)
-
-    finally:
-        # Close the client
-        client.close()
+client.close()
