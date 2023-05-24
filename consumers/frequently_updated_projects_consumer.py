@@ -16,9 +16,9 @@ while True:
     repo = json.loads(msg.data())
 
     if repo["name"] in df.index:
-        df.loc[repo["name"], "commits"] += repo["commits"]
+        df.loc[repo["name"], "commits"] += int(repo["commits"])
     else:
-        df.at[repo["name"], "commits"] = 1
+        df.at[repo["name"], "commits"] = int(repo["commits"])
 
     most_commits = df.nlargest(10, "commits")
     print("Top 10 frequently updated projects: ", most_commits)
