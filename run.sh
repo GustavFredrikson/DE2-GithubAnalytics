@@ -23,6 +23,9 @@ python3 -m pip install -r /home/ubuntu/DE2-GithubAnalytics/requirements.txt
 # Step 3: Copy the supervisord.conf to /etc/supervisor/conf.d/
 cp /home/ubuntu/DE2-GithubAnalytics/supervisord.conf /etc/supervisor/supervisord.conf
 
+# If running, stop
+supervisorctl stop all
+
 # Step 4: Reread, update and start supervisor tasks
 supervisorctl reread
 supervisorctl update
