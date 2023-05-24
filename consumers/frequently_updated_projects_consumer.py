@@ -13,6 +13,12 @@ df["commits"] = df["commits"].astype("int")
 message_count = 0
 save_interval = 1000
 
+# If file exists, load it
+try:
+    df = pd.read_csv("most_commits.csv", index_col="name")
+except:
+    pass
+
 while True:
     try:
         msg = consumer.receive()

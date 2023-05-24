@@ -15,6 +15,12 @@ df["count"] = df["count"].astype("int")
 message_count = 0
 save_interval = 1000
 
+# If file exists, load it
+try:
+    df = pd.read_csv("top_languages.csv", index_col="language")
+except:
+    pass
+
 while True:
     try:
         msg = consumer.receive()
