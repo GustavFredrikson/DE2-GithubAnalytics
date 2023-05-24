@@ -3,9 +3,6 @@ import pulsar
 import json
 from decouple import config
 
-# Configuration
-TOKEN = config("../GITHUB_API_TOKEN")
-
 # Pulsar client
 client = pulsar.Client("pulsar://localhost:6650")
 
