@@ -3,8 +3,8 @@ import json
 
 client = pulsar.Client("pulsar://localhost:6650")
 
-consumer = client.subscribe("FrequentlyUpdatedProjectsTopic", "my-subscription")
-producer = client.create_producer("ProgrammingLanguagesTopic")
+consumer = client.subscribe("ProgrammingLanguagesTopic", "my-subscription")
+producer = client.create_producer("LanguagesTopic")
 
 while True:
     try:

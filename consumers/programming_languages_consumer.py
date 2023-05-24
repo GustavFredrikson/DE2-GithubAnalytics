@@ -4,7 +4,7 @@ import pandas as pd
 
 client = pulsar.Client("pulsar://localhost:6650")
 
-consumer = client.subscribe("ProgrammingLanguagesTopic", "my-subscription")
+consumer = client.subscribe("LanguagesTopic", "my-subscription")
 
 # DataFrame to keep track of language counts
 df = pd.DataFrame(columns=["language", "count"])
