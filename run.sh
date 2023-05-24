@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Step 0: Run as root
-sudo -s
+# Step 0: If not root, echo error and exit
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
 
 # Step 1: Create logs directory if it doesn't exist
 mkdir -p /home/ubuntu/DE2-GithubAnalytics/logs/
