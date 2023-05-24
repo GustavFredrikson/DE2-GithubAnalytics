@@ -8,6 +8,8 @@ consumer = client.subscribe("CommitsTopic", "my-subscription")
 df = pd.DataFrame(columns=["name", "commits"])
 df.set_index("name", inplace=True)
 
+df["commits"] = df["commits"].astype("int")
+
 message_count = 0
 save_interval = 1000
 

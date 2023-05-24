@@ -10,6 +10,8 @@ consumer = client.subscribe("LanguagesTopic", "my-subscription")
 df = pd.DataFrame(columns=["language", "count"])
 df.set_index("language", inplace=True)
 
+df["count"] = df["count"].astype("int")
+
 message_count = 0
 save_interval = 1000
 
@@ -24,7 +26,6 @@ while True:
         else:
             df.at[repo["language"], "count"] = 1
 
-        # Increment message count
         message_count += 1
 
         # Calculate and print the top 10 languages
