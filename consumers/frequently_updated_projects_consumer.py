@@ -8,6 +8,9 @@ consumer = client.subscribe("CommitsTopic", "my-subscription")
 df = pd.DataFrame(columns=["name", "commits"])
 df.set_index("name", inplace=True)
 
+message_count = 0
+save_interval = 1000
+
 while True:
     msg = consumer.receive()
     repo = json.loads(msg.data())
@@ -15,10 +18,13 @@ while True:
     if repo["name"] in df.index:
         df.loc[repo["name"], "commits"] += repo["commits"]
     else:
-        df.loc[repo["name"]] = {"commits": repo["commits"]}
+        df.at[repo["name"], "commits"] = 1
 
     most_commits = df.nlargest(10, "commits")
     print("Top 10 frequently updated projects: ", most_commits)
+    # Save to file every save_interval messages
+    if message_count % save_interval == 0:
+        most_commits.to_csv("most_commits.csv")
     consumer.acknowledge(msg)
 
 client.close()

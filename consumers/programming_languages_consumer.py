@@ -10,6 +10,9 @@ consumer = client.subscribe("LanguagesTopic", "my-subscription")
 df = pd.DataFrame(columns=["language", "count"])
 df.set_index("language", inplace=True)
 
+message_count = 0
+save_interval = 1000
+
 while True:
     try:
         msg = consumer.receive()
@@ -21,9 +24,16 @@ while True:
         else:
             df.at[repo["language"], "count"] = 1
 
+        # Increment message count
+        message_count += 1
+
         # Calculate and print the top 10 languages
         top_languages = df.nlargest(10, "count")
         print("Top 10 languages: ", top_languages)
+
+        # Save to file every save_interval messages
+        if message_count % save_interval == 0:
+            top_languages.to_csv("top_languages.csv")
 
         # Acknowledge processing of message so that it can be deleted
         consumer.acknowledge(msg)
