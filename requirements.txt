@@ -31,7 +31,9 @@ lazr.uri==1.0.3
 MarkupSafe==1.1.0
 more-itertools==4.2.0
 netifaces==0.10.4
+numpy==1.24.3
 oauthlib==3.1.0
+pandas==2.0.1
 pbr==5.11.1
 pexpect==4.6.0
 pulsar-client==3.1.0
@@ -47,8 +49,10 @@ pyOpenSSL==19.0.0
 pyrsistent==0.15.5
 pyserial==3.4
 python-apt==2.0.0+ubuntu0.20.4.8
+python-dateutil==2.8.2
 python-debian===0.1.36ubuntu1
 python-decouple==3.8
+pytz==2023.3
 PyYAML==5.3.1
 requests==2.22.0
 requests-unixsocket==0.2.0
@@ -63,6 +67,7 @@ systemd-python==234
 testresources==2.0.1
 tqdm==4.65.0
 Twisted==18.9.0
+tzdata==2023.3
 ubuntu-advantage-tools==27.12
 ufw==0.36
 unattended-upgrades==0.1

@@ -1,0 +1,173 @@
+2023-05-24 07:54:58.833 INFO  [140147353188160] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:54:58.833 INFO  [140147353188160] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:54:58.833 INFO  [140147353188160] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:54:58.849 INFO  [140147331757824] ClientConnection:388 | [127.0.0.1:60236 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:54:58.884 INFO  [140147331757824] HandlerBase:72 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Getting connection from pool
+2023-05-24 07:54:58.887 INFO  [140147331757824] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:54:58.887 INFO  [140147331757824] ConnectionPool:97 | Created connection for pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:54:58.888 INFO  [140147331757824] ClientConnection:390 | [127.0.0.1:60252 -> 127.0.0.1:6650] Connected to broker through proxy. Logical broker: pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:55:08.888 ERROR [140147331757824] ClientConnection:578 | [127.0.0.1:60252 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:55:08.888 INFO  [140147331757824] ClientConnection:1600 | [127.0.0.1:60252 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:08.888 INFO  [140147331757824] ClientConnection:269 | [127.0.0.1:60252 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:09.101 INFO  [140147353188160] ClientConnection:1600 | [127.0.0.1:60236 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:09.101 INFO  [140147353188160] ClientConnection:269 | [127.0.0.1:60236 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:09.221 INFO  [140027392997184] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:55:09.222 INFO  [140027392997184] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:09.222 INFO  [140027392997184] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:55:09.224 INFO  [140027371566848] ClientConnection:388 | [127.0.0.1:48212 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:55:19.224 ERROR [140027371566848] ClientConnection:578 | [127.0.0.1:48212 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:55:19.224 INFO  [140027371566848] ClientConnection:1600 | [127.0.0.1:48212 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:19.224 ERROR [140027371566848] ClientImpl:406 | Error Checking/Getting Partition Metadata while Subscribing on persistent://public/default/MainGithubRepoTopic -- ConnectError
+2023-05-24 07:55:19.224 INFO  [140027371566848] ClientConnection:269 | [127.0.0.1:48212 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:20.539 INFO  [140613797562176] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:55:20.540 INFO  [140613797562176] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:20.540 INFO  [140613797562176] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:55:20.542 INFO  [140613776131840] ClientConnection:388 | [127.0.0.1:47140 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:55:30.541 ERROR [140613776131840] ClientConnection:578 | [127.0.0.1:47140 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:55:30.541 INFO  [140613776131840] ClientConnection:1600 | [127.0.0.1:47140 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:30.542 ERROR [140613776131840] ClientImpl:406 | Error Checking/Getting Partition Metadata while Subscribing on persistent://public/default/MainGithubRepoTopic -- ConnectError
+2023-05-24 07:55:30.542 INFO  [140613776131840] ClientConnection:269 | [127.0.0.1:47140 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:31.152 INFO  [140002079332160] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:55:31.152 INFO  [140002079332160] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:31.152 INFO  [140002079332160] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:55:31.153 INFO  [140002057901824] ClientConnection:388 | [127.0.0.1:54118 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:55:31.171 INFO  [140002057901824] HandlerBase:72 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Getting connection from pool
+2023-05-24 07:55:31.175 INFO  [140002057901824] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:31.175 INFO  [140002057901824] ConnectionPool:97 | Created connection for pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:55:31.176 INFO  [140002057901824] ClientConnection:390 | [127.0.0.1:54132 -> 127.0.0.1:6650] Connected to broker through proxy. Logical broker: pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:55:31.198 WARN  [140002057901824] ClientConnection:1112 | [127.0.0.1:54132 -> 127.0.0.1:6650] Received error response from server: ConsumerBusy (Exclusive consumer is already connected) -- req_id: 0
+2023-05-24 07:55:31.198 ERROR [140002057901824] ConsumerImpl:280 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Failed to create consumer: ConsumerBusy
+2023-05-24 07:55:31.421 INFO  [140002079332160] ClientConnection:1600 | [127.0.0.1:54118 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:31.421 INFO  [140002079332160] ClientConnection:269 | [127.0.0.1:54118 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:31.421 INFO  [140002079332160] ClientConnection:1600 | [127.0.0.1:54132 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:31.421 INFO  [140002079332160] ClientConnection:269 | [127.0.0.1:54132 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:32.530 INFO  [139915824858944] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:55:32.530 INFO  [139915824858944] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:32.530 INFO  [139915824858944] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:55:32.532 INFO  [139915803428608] ClientConnection:388 | [127.0.0.1:54138 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:55:42.532 ERROR [139915803428608] ClientConnection:578 | [127.0.0.1:54138 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:55:42.532 INFO  [139915803428608] ClientConnection:1600 | [127.0.0.1:54138 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:42.532 ERROR [139915803428608] ClientImpl:406 | Error Checking/Getting Partition Metadata while Subscribing on persistent://public/default/MainGithubRepoTopic -- ConnectError
+2023-05-24 07:55:42.532 INFO  [139915803428608] ClientConnection:269 | [127.0.0.1:54138 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:42.942 INFO  [139643789354816] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:55:42.942 INFO  [139643789354816] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:42.942 INFO  [139643789354816] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:55:42.945 INFO  [139643767924480] ClientConnection:388 | [127.0.0.1:58898 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:55:42.963 INFO  [139643767924480] HandlerBase:72 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Getting connection from pool
+2023-05-24 07:55:42.966 INFO  [139643767924480] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:42.967 INFO  [139643767924480] ConnectionPool:97 | Created connection for pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:55:42.968 INFO  [139643767924480] ClientConnection:390 | [127.0.0.1:58914 -> 127.0.0.1:6650] Connected to broker through proxy. Logical broker: pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:55:42.986 WARN  [139643767924480] ClientConnection:1112 | [127.0.0.1:58914 -> 127.0.0.1:6650] Received error response from server: ConsumerBusy (Exclusive consumer is already connected) -- req_id: 0
+2023-05-24 07:55:42.986 ERROR [139643767924480] ConsumerImpl:280 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Failed to create consumer: ConsumerBusy
+2023-05-24 07:55:43.212 INFO  [139643789354816] ClientConnection:1600 | [127.0.0.1:58898 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:43.212 INFO  [139643789354816] ClientConnection:269 | [127.0.0.1:58898 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:43.212 INFO  [139643789354816] ClientConnection:1600 | [127.0.0.1:58914 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:43.212 INFO  [139643789354816] ClientConnection:269 | [127.0.0.1:58914 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:45.122 INFO  [140282619963200] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:55:45.122 INFO  [140282619963200] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:45.122 INFO  [140282619963200] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:55:45.124 INFO  [140282598532864] ClientConnection:388 | [127.0.0.1:42860 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:55:55.123 ERROR [140282598532864] ClientConnection:578 | [127.0.0.1:42860 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:55:55.124 INFO  [140282598532864] ClientConnection:1600 | [127.0.0.1:42860 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:55.124 ERROR [140282598532864] ClientImpl:406 | Error Checking/Getting Partition Metadata while Subscribing on persistent://public/default/MainGithubRepoTopic -- ConnectError
+2023-05-24 07:55:55.124 INFO  [140282598532864] ClientConnection:269 | [127.0.0.1:42860 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:55.509 INFO  [140663539251008] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:55:55.510 INFO  [140663539251008] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:55.510 INFO  [140663539251008] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:55:55.511 INFO  [140663517820672] ClientConnection:388 | [127.0.0.1:57290 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:55:55.531 INFO  [140663517820672] HandlerBase:72 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Getting connection from pool
+2023-05-24 07:55:55.533 INFO  [140663517820672] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:55.533 INFO  [140663517820672] ConnectionPool:97 | Created connection for pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:55:55.535 INFO  [140663517820672] ClientConnection:390 | [127.0.0.1:57298 -> 127.0.0.1:6650] Connected to broker through proxy. Logical broker: pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:55:55.547 WARN  [140663517820672] ClientConnection:1112 | [127.0.0.1:57298 -> 127.0.0.1:6650] Received error response from server: ConsumerBusy (Exclusive consumer is already connected) -- req_id: 0
+2023-05-24 07:55:55.548 ERROR [140663517820672] ConsumerImpl:280 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Failed to create consumer: ConsumerBusy
+2023-05-24 07:55:56.705 INFO  [140663539251008] ClientConnection:1600 | [127.0.0.1:57290 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:56.705 INFO  [140663539251008] ClientConnection:269 | [127.0.0.1:57290 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:56.706 INFO  [140663539251008] ClientConnection:1600 | [127.0.0.1:57298 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:56.706 INFO  [140663539251008] ClientConnection:269 | [127.0.0.1:57298 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:57.407 INFO  [140476787291968] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:55:57.407 INFO  [140476787291968] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:57.408 INFO  [140476787291968] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:55:57.411 INFO  [140476765861632] ClientConnection:388 | [127.0.0.1:57300 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:56:07.411 ERROR [140476765861632] ClientConnection:578 | [127.0.0.1:57300 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:56:07.411 INFO  [140476765861632] ClientConnection:1600 | [127.0.0.1:57300 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:07.411 ERROR [140476765861632] ClientImpl:406 | Error Checking/Getting Partition Metadata while Subscribing on persistent://public/default/MainGithubRepoTopic -- ConnectError
+2023-05-24 07:56:07.411 INFO  [140476765861632] ClientConnection:269 | [127.0.0.1:57300 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:10.026 INFO  [140170043799360] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:56:10.026 INFO  [140170043799360] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:10.026 INFO  [140170043799360] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:56:10.028 INFO  [140170022369024] ClientConnection:388 | [127.0.0.1:52690 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:56:10.047 INFO  [140170022369024] HandlerBase:72 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Getting connection from pool
+2023-05-24 07:56:10.050 INFO  [140170022369024] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:10.050 INFO  [140170022369024] ConnectionPool:97 | Created connection for pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:56:10.051 INFO  [140170022369024] ClientConnection:390 | [127.0.0.1:52692 -> 127.0.0.1:6650] Connected to broker through proxy. Logical broker: pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:56:10.068 WARN  [140170022369024] ClientConnection:1112 | [127.0.0.1:52692 -> 127.0.0.1:6650] Received error response from server: ConsumerBusy (Exclusive consumer is already connected) -- req_id: 0
+2023-05-24 07:56:10.068 ERROR [140170022369024] ConsumerImpl:280 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Failed to create consumer: ConsumerBusy
+2023-05-24 07:56:10.324 INFO  [140170043799360] ClientConnection:1600 | [127.0.0.1:52690 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:10.325 INFO  [140170043799360] ClientConnection:269 | [127.0.0.1:52690 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:10.325 INFO  [140170043799360] ClientConnection:1600 | [127.0.0.1:52692 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:10.325 INFO  [140170043799360] ClientConnection:269 | [127.0.0.1:52692 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:11.914 INFO  [140150976751424] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:56:11.915 INFO  [140150976751424] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:11.915 INFO  [140150976751424] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:56:11.917 INFO  [140150955321088] ClientConnection:388 | [127.0.0.1:52708 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:56:21.917 ERROR [140150955321088] ClientConnection:578 | [127.0.0.1:52708 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:56:21.917 INFO  [140150955321088] ClientConnection:1600 | [127.0.0.1:52708 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:21.917 ERROR [140150955321088] ClientImpl:406 | Error Checking/Getting Partition Metadata while Subscribing on persistent://public/default/MainGithubRepoTopic -- ConnectError
+2023-05-24 07:56:21.917 INFO  [140150955321088] ClientConnection:269 | [127.0.0.1:52708 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:22.944 INFO  [139933792937792] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:56:22.944 INFO  [139933792937792] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:22.944 INFO  [139933792937792] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:56:22.945 INFO  [139933771507456] ClientConnection:388 | [127.0.0.1:39202 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:56:22.966 INFO  [139933771507456] HandlerBase:72 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Getting connection from pool
+2023-05-24 07:56:22.969 INFO  [139933771507456] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:22.969 INFO  [139933771507456] ConnectionPool:97 | Created connection for pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:56:22.969 INFO  [139933771507456] ClientConnection:390 | [127.0.0.1:39212 -> 127.0.0.1:6650] Connected to broker through proxy. Logical broker: pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:56:22.984 WARN  [139933771507456] ClientConnection:1112 | [127.0.0.1:39212 -> 127.0.0.1:6650] Received error response from server: ConsumerBusy (Exclusive consumer is already connected) -- req_id: 0
+2023-05-24 07:56:22.985 ERROR [139933771507456] ConsumerImpl:280 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Failed to create consumer: ConsumerBusy
+2023-05-24 07:56:23.198 INFO  [139933792937792] ClientConnection:1600 | [127.0.0.1:39202 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:23.198 INFO  [139933792937792] ClientConnection:269 | [127.0.0.1:39202 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:23.198 INFO  [139933792937792] ClientConnection:1600 | [127.0.0.1:39212 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:23.198 INFO  [139933792937792] ClientConnection:269 | [127.0.0.1:39212 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:24.298 INFO  [140669574461248] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:56:24.298 INFO  [140669574461248] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:24.298 INFO  [140669574461248] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:56:24.300 INFO  [140669553030912] ClientConnection:388 | [127.0.0.1:47094 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:56:34.300 ERROR [140669553030912] ClientConnection:578 | [127.0.0.1:47094 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:56:34.300 INFO  [140669553030912] ClientConnection:1600 | [127.0.0.1:47094 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:34.300 ERROR [140669553030912] ClientImpl:406 | Error Checking/Getting Partition Metadata while Subscribing on persistent://public/default/MainGithubRepoTopic -- ConnectError
+2023-05-24 07:56:34.300 INFO  [140669553030912] ClientConnection:269 | [127.0.0.1:47094 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:34.858 INFO  [139947519272768] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:56:34.859 INFO  [139947519272768] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:34.859 INFO  [139947519272768] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:56:34.860 INFO  [139947497842432] ClientConnection:388 | [127.0.0.1:34138 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:56:34.881 INFO  [139947497842432] HandlerBase:72 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Getting connection from pool
+2023-05-24 07:56:34.884 INFO  [139947497842432] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:34.884 INFO  [139947497842432] ConnectionPool:97 | Created connection for pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:56:34.885 INFO  [139947497842432] ClientConnection:390 | [127.0.0.1:34142 -> 127.0.0.1:6650] Connected to broker through proxy. Logical broker: pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:56:34.902 WARN  [139947497842432] ClientConnection:1112 | [127.0.0.1:34142 -> 127.0.0.1:6650] Received error response from server: ConsumerBusy (Exclusive consumer is already connected) -- req_id: 0
+2023-05-24 07:56:34.902 ERROR [139947497842432] ConsumerImpl:280 | [persistent://public/default/MainGithubRepoTopic, my-subscription, 0] Failed to create consumer: ConsumerBusy
+2023-05-24 07:56:35.140 INFO  [139947519272768] ClientConnection:1600 | [127.0.0.1:34138 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:35.140 INFO  [139947519272768] ClientConnection:269 | [127.0.0.1:34138 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:35.140 INFO  [139947519272768] ClientConnection:1600 | [127.0.0.1:34142 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:35.140 INFO  [139947519272768] ClientConnection:269 | [127.0.0.1:34142 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:36.571 INFO  [139693191305024] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:56:36.571 INFO  [139693191305024] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:36.571 INFO  [139693191305024] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:56:36.573 INFO  [139693169874688] ClientConnection:388 | [127.0.0.1:34146 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:56:46.572 ERROR [139693169874688] ClientConnection:578 | [127.0.0.1:34146 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:56:46.573 INFO  [139693169874688] ClientConnection:1600 | [127.0.0.1:34146 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:46.573 ERROR [139693169874688] ClientImpl:406 | Error Checking/Getting Partition Metadata while Subscribing on persistent://public/default/MainGithubRepoTopic -- ConnectError
+2023-05-24 07:56:46.573 INFO  [139693169874688] ClientConnection:269 | [127.0.0.1:34146 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:47.898 INFO  [139638962300736] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:56:47.898 INFO  [139638962300736] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:47.898 INFO  [139638962300736] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:56:47.900 INFO  [139638940870400] ClientConnection:388 | [127.0.0.1:55568 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:56:57.899 ERROR [139638940870400] ClientConnection:578 | [127.0.0.1:55568 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:56:57.900 INFO  [139638940870400] ClientConnection:1600 | [127.0.0.1:55568 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:56:57.901 ERROR [139638940870400] ClientImpl:406 | Error Checking/Getting Partition Metadata while Subscribing on persistent://public/default/MainGithubRepoTopic -- ConnectError
+2023-05-24 07:56:57.902 INFO  [139638940870400] ClientConnection:269 | [127.0.0.1:55568 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:56:59.208 INFO  [139707775633216] Client:87 | Subscribing on Topic :MainGithubRepoTopic
+2023-05-24 07:56:59.208 INFO  [139707775633216] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:56:59.208 INFO  [139707775633216] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:56:59.210 INFO  [139707754202880] ClientConnection:388 | [127.0.0.1:53180 -> 127.0.0.1:6650] Connected to broker

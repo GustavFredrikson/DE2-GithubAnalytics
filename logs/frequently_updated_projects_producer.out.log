@@ -1,0 +1,11 @@
+2023-05-24 07:54:58.869 INFO  [139808295966528] Client:87 | Subscribing on Topic :FrequentlyUpdatedProjectsTopic
+2023-05-24 07:54:58.869 INFO  [139808295966528] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:54:58.869 INFO  [139808295966528] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:54:58.871 INFO  [139808260601600] ClientConnection:388 | [127.0.0.1:60240 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:54:58.889 INFO  [139808260601600] HandlerBase:72 | [persistent://public/default/FrequentlyUpdatedProjectsTopic, my-subscription, 0] Getting connection from pool
+2023-05-24 07:54:58.891 INFO  [139808260601600] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:54:58.891 INFO  [139808260601600] ConnectionPool:97 | Created connection for pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:54:58.892 INFO  [139808260601600] ClientConnection:390 | [127.0.0.1:60258 -> 127.0.0.1:6650] Connected to broker through proxy. Logical broker: pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:54:59.235 INFO  [139808260601600] ConsumerImpl:238 | [persistent://public/default/FrequentlyUpdatedProjectsTopic, my-subscription, 0] Created consumer on broker [127.0.0.1:60258 -> 127.0.0.1:6650] 
+2023-05-24 07:54:59.244 INFO  [139808260601600] HandlerBase:72 | [persistent://public/default/CommitsTopic, ] Getting connection from pool
+2023-05-24 07:54:59.740 INFO  [139808260601600] ProducerImpl:202 | [persistent://public/default/CommitsTopic, ] Created producer on broker [127.0.0.1:60258 -> 127.0.0.1:6650] 

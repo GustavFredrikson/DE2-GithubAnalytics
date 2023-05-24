@@ -1,0 +1,21 @@
+2023-05-24 07:54:59.015 INFO  [139646207227712] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:54:59.015 INFO  [139646207227712] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:54:59.017 INFO  [139646171600640] ClientConnection:388 | [127.0.0.1:60274 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:54:59.029 INFO  [139646171600640] HandlerBase:72 | [persistent://public/default/MainGithubRepoTopic, ] Getting connection from pool
+2023-05-24 07:54:59.032 INFO  [139646171600640] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:54:59.032 INFO  [139646171600640] ConnectionPool:97 | Created connection for pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:54:59.032 INFO  [139646171600640] ClientConnection:390 | [127.0.0.1:60290 -> 127.0.0.1:6650] Connected to broker through proxy. Logical broker: pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:55:09.032 ERROR [139646171600640] ClientConnection:578 | [127.0.0.1:60290 -> 127.0.0.1:6650] Connection was not established in 10000 ms, close the socket
+2023-05-24 07:55:09.032 INFO  [139646171600640] ClientConnection:1600 | [127.0.0.1:60290 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:09.032 INFO  [139646171600640] ProducerImpl:697 | Producer - [persistent://public/default/MainGithubRepoTopic, ] , [batching  = off]
+2023-05-24 07:55:09.032 INFO  [139646171600640] ClientConnection:269 | [127.0.0.1:60290 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:09.078 INFO  [139646207227712] ClientConnection:1600 | [127.0.0.1:60274 -> 127.0.0.1:6650] Connection closed with ConnectError
+2023-05-24 07:55:09.079 INFO  [139646171600640] ClientConnection:269 | [127.0.0.1:60274 -> 127.0.0.1:6650] Destroyed connection
+2023-05-24 07:55:09.342 INFO  [140665739384640] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:09.342 INFO  [140665739384640] ConnectionPool:97 | Created connection for pulsar://localhost:6650
+2023-05-24 07:55:09.344 INFO  [140665703757568] ClientConnection:388 | [127.0.0.1:48222 -> 127.0.0.1:6650] Connected to broker
+2023-05-24 07:55:09.372 INFO  [140665703757568] HandlerBase:72 | [persistent://public/default/MainGithubRepoTopic, ] Getting connection from pool
+2023-05-24 07:55:09.376 INFO  [140665703757568] ClientConnection:190 | [<none> -> pulsar://localhost:6650] Create ClientConnection, timeout=10000
+2023-05-24 07:55:09.376 INFO  [140665703757568] ConnectionPool:97 | Created connection for pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:55:09.376 INFO  [140665703757568] ClientConnection:390 | [127.0.0.1:48224 -> 127.0.0.1:6650] Connected to broker through proxy. Logical broker: pulsar://pulsar-broker-0.pulsar-broker.pulsar.svc.cluster.local:6650
+2023-05-24 07:55:09.502 INFO  [140665703757568] ProducerImpl:202 | [persistent://public/default/MainGithubRepoTopic, ] Created producer on broker [127.0.0.1:48224 -> 127.0.0.1:6650] 
