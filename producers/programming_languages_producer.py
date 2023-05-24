@@ -3,7 +3,7 @@ import json
 
 client = pulsar.Client("pulsar://localhost:6650")
 
-consumer = client.subscribe("MainGithubRepoTopic", "my-subscription")
+consumer = client.subscribe("FrequentlyUpdatedProjectsTopic", "my-subscription")
 producer = client.create_producer("ProgrammingLanguagesTopic")
 
 while True:
