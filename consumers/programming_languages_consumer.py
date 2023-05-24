@@ -19,7 +19,7 @@ while True:
         if repo["language"] in df.index:
             df.loc[repo["language"], "count"] += 1
         else:
-            df.loc[repo["language"]] = {"count": 1}
+            df.at[repo["language"], "count"] = 1
 
         # Calculate and print the top 10 languages
         top_languages = df.nlargest(10, "count")
