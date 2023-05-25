@@ -20,7 +20,8 @@ function show_pod_logs {
   local POD_NAME=$1
 
   echo "Logs for pod $POD_NAME:"
-  microk8s kubectl logs $POD_NAME -n $NAMESPACE
+  microk8s kubectl logs $POD_NAME -n $NAMESPACE > app.log
+  cat app.log
   echo "--------------------------------------------------"
 }
 
