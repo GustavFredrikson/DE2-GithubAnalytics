@@ -14,7 +14,7 @@ df["commits"] = df["commits"].astype("int")
 df["commit_frequency"] = df["commit_frequency"].astype("float")
 
 message_count = 0
-save_interval = 1000
+save_interval = 10
 
 # If file exists, load it
 try:

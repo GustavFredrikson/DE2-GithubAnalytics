@@ -26,6 +26,9 @@ while True:
         msg = consumer.receive()
         repo = json.loads(msg.data())
 
+        # If no language is specified, set it to "No Language"
+        language = repo["language"] if repo["language"] else "No Language"
+
         # Update the DataFrame with the language of the new repository
         if repo["language"] in df.index:
             df.loc[repo["language"], "count"] += 1
@@ -40,6 +43,8 @@ while True:
 
         # Save to file every save_interval messages
         if message_count % save_interval == 0:
+            # Sort it by count
+            df.sort_values(by="count", ascending=False, inplace=True)
             df.to_csv("top_languages.csv")
 
         # Acknowledge processing of message so that it can be deleted
