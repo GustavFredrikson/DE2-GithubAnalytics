@@ -2,7 +2,9 @@ import pulsar
 import json
 import pandas as pd
 
-client = pulsar.Client("pulsar://localhost:6650")
+# Configure the logging settings
+
+client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 consumer = client.subscribe("CommitsTopic", "my-subscription")
 
 df = pd.DataFrame(
@@ -17,10 +19,10 @@ message_count = 0
 save_interval = 10
 
 # If file exists, load it
-try:
-    df = pd.read_csv("most_commits.csv", index_col="name")
-except FileNotFoundError:
-    pass
+# try:
+#     df = pd.read_csv("most_commits.csv", index_col="name")
+# except FileNotFoundError:
+#     pass
 
 while True:
     try:
@@ -48,14 +50,15 @@ while True:
 
         message_count += 1
 
-        most_commits = df.nlargest(10, "commits")
-        print("Top 10 projects by total commits: ", most_commits)
-
-        most_frequent_commits = df.nlargest(10, "commit_frequency")
-        print("Top 10 projects by commit frequency: ", most_frequent_commits)
 
         # Save all data to file every save_interval messages
         if message_count % save_interval == 0:
+            most_commits = df.nlargest(10, "commits")
+            print("Top 10 projects by total commits: ", most_commits)
+
+            most_frequent_commits = df.nlargest(10, "commit_frequency")
+            print("Top 10 projects by commit frequency: ", most_frequent_commits)
+
             df.sort_values(by="commits", ascending=False, inplace=True)
             df.to_csv("most_commits.csv")
 

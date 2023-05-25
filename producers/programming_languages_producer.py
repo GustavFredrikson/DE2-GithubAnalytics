@@ -1,7 +1,9 @@
 import pulsar
 import json
 
-client = pulsar.Client("pulsar://localhost:6650")
+# Configure the logging settings
+
+client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
 consumer = client.subscribe("ProgrammingLanguagesTopic", "my-subscription")
 producer = client.create_producer("LanguagesTopic")
@@ -10,7 +12,7 @@ while True:
     try:
         msg = consumer.receive()
         repo = json.loads(msg.data())
-        print(f"Received message: '{repo}' id='{msg.message_id()}'")
+        # print(f"Received message: '{repo}' id='{msg.message_id()}'")
 
         # Forward data to the ProgrammingLanguagesTopic
         producer.send(

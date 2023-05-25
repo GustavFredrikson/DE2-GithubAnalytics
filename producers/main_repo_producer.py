@@ -1,7 +1,6 @@
 import pulsar
 from decouple import config
 import requests
-from tqdm import tqdm
 import json
 import datetime
 import time
@@ -17,7 +16,7 @@ HEADERS = {
 PER_PAGE = 100
 
 # Pulsar client
-client = pulsar.Client("pulsar://localhost:6650")
+client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
 # Pulsar producer
 producer = client.create_producer("MainGithubRepoTopic")
@@ -45,14 +44,14 @@ def fetch_repos(date):
     }
 
     repos = []
-    # use tqdm to make a while loop with a progress bar
-    for _ in tqdm(range(10), desc=f"Fetching repos for {date}"):
+
+    for _ in range(10):
         while True:
             core_remaining, core_reset = check_rate_limit()
             if core_remaining < 100:  # or whatever threshold you want
                 reset_time = datetime.datetime.fromtimestamp(core_reset)
                 sleep_seconds = (reset_time - datetime.datetime.now()).total_seconds()
-                tqdm.write(f"Rate limit low. Sleeping for {sleep_seconds} seconds.")
+                print(f"Rate limit low. Sleeping for {sleep_seconds} seconds.")
                 time.sleep(sleep_seconds + 1)  # add a bit of extra time to be safe
             else:
                 break
@@ -74,7 +73,7 @@ def fetch_repos(date):
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in {403, 404, 409}:
                 # The repository is empty, was deleted or only contains git submodules, skip it
-                tqdm.write(f"Skipping repo due to HTTP error: {e}")
+                print(f"Skipping repository: {repo['full_name']}")
                 continue
             else:
                 raise e

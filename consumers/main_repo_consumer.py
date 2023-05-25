@@ -1,7 +1,7 @@
 import pulsar
 import json
 
-client = pulsar.Client("pulsar://localhost:6650")
+client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
 consumer = client.subscribe("MainGithubRepoTopic", "my-subscription")
 
@@ -14,7 +14,6 @@ while True:
     try:
         msg = consumer.receive()
         repo = json.loads(msg.data())
-        print(f"Received message: '{repo}' id='{msg.message_id()}'")
 
         # Forward data to other topics, TODO: only send necessary data
         producer_languages.send(json.dumps(repo).encode("utf-8"))

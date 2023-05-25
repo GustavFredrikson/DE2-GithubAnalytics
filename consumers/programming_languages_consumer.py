@@ -2,7 +2,7 @@ import pulsar
 import json
 import pandas as pd
 
-client = pulsar.Client("pulsar://localhost:6650")
+client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
 consumer = client.subscribe("LanguagesTopic", "my-subscription")
 
@@ -16,18 +16,17 @@ message_count = 0
 save_interval = 10
 
 # If file exists, load it
-try:
-    df = pd.read_csv("top_languages.csv", index_col="language")
-    df["language"].fillna("No Language", inplace=True)
-except:
-    pass
+# try:
+#     df = pd.read_csv("top_languages.csv", index_col="language")
+#     df["language"].fillna("No Language", inplace=True)
+# except:
+#     pass
 
 while True:
     try:
         msg = consumer.receive()
         repo = json.loads(msg.data())
 
-        print(f"Received message: '{repo}' id='{msg.message_id()}'")
         repo_language = repo["language"] if repo["language"] else "No Language"
 
         # Update the DataFrame with the language of the new repository
@@ -39,11 +38,11 @@ while True:
         message_count += 1
 
         # Calculate and print the top 10 languages
-        top_languages = df.nlargest(10, "count")
-        print("Top 10 languages: ", top_languages)
 
         # Save to file every save_interval messages
         if message_count % save_interval == 0:
+            top_languages = df.nlargest(10, "count")
+            print("Top 10 languages: ", top_languages)
             # Sort it by count
             df.sort_values(by="count", ascending=False, inplace=True)
             df.to_csv("top_languages.csv")

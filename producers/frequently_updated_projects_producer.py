@@ -15,7 +15,7 @@ COMMITS_BASE_URL = "https://api.github.com/repos/{owner}/{repo}/commits"
 PER_PAGE = 100
 RATE_LIMIT_URL = "https://api.github.com/rate_limit"
 
-client = pulsar.Client("pulsar://localhost:6650")
+client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 consumer = client.subscribe("FrequentlyUpdatedProjectsTopic", "my-subscription")
 producer = client.create_producer("CommitsTopic")
 
