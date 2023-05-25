@@ -55,7 +55,7 @@ function create_and_run_pod {
 
     # Run the script in the pod
     echo "Running script $SCRIPT_NAME in pod $POD_NAME..."
-    microk8s kubectl exec $POD_NAME -n $NAMESPACE -- /bin/bash -c "python /tmp/$(basename $SCRIPT_NAME)"
+    microk8s kubectl exec $POD_NAME -n $NAMESPACE -- /bin/bash -c "python /tmp/$(basename $SCRIPT_NAME)" &
   done
 }
 
