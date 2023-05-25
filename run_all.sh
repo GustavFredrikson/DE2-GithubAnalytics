@@ -41,10 +41,15 @@ function create_and_run_pod {
     echo "Waiting for pod $POD_NAME to be ready..."
     microk8s kubectl wait --namespace=$NAMESPACE --for=condition=ready pod/$POD_NAME
 
-    sleep 5
 
+    # List the available pods
+    echo "Listing all available pods..."
     microk8s kubectl get pods --namespace=$NAMESPACE
 
+
+    # Check the status of the pod
+    echo "Checking status for pod $POD_NAME..."
+    microk8s kubectl describe pod $POD_NAME --namespace=$NAMESPACE
 
     # Copy the script to the pod
     echo "Copying script $SCRIPT_NAME to pod $POD_NAME..."
