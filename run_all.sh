@@ -8,9 +8,9 @@ IMAGE="gustavfredrikson/de2python"
 
 # Define your pod names and script names
 declare -A PRODUCER_PODS=(
+  ["main-repo-producer-pod"]="producers/main_repo_producer.py"
   ["devops-producer-pod"]="producers/devops_producer.py"
   ["frequently-updated-projects-producer-pod"]="producers/frequently_updated_projects_producer.py"
-  ["main-repo-producer-pod"]="producers/main_repo_producer.py"
   ["programming-languages-producer-pod"]="producers/programming_languages_producer.py"
   ["test-driven-development-producer-pod"]="producers/test_driven_development_producer.py"
 )
