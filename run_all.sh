@@ -29,6 +29,10 @@ function create_and_run_pod {
   for POD_NAME in "${!PODS[@]}"; do
     SCRIPT_NAME=${PODS[$POD_NAME]}
 
+    # Delete the pod if it already exists
+    echo "Deleting pod $POD_NAME if it already exists..."
+    microk8s kubectl delete pod $POD_NAME --namespace=$NAMESPACE --ignore-not-found=true
+
     # Create the pod
     echo "Creating pod $POD_NAME..."
     microk8s kubectl run $POD_NAME --namespace=$NAMESPACE --image=$IMAGE --restart=Never -- sleep infinity
