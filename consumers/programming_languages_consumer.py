@@ -38,11 +38,11 @@ while True:
         message_count += 1
 
         # Calculate and print the top 10 languages
-        top_languages = df.nlargest(10, "count")
-        print("Top 10 languages: ", top_languages)
 
         # Save to file every save_interval messages
         if message_count % save_interval == 0:
+            top_languages = df.nlargest(10, "count")
+            print("Top 10 languages: ", top_languages)
             # Sort it by count
             df.sort_values(by="count", ascending=False, inplace=True)
             df.to_csv("top_languages.csv")

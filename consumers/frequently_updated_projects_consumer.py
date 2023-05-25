@@ -50,14 +50,15 @@ while True:
 
         message_count += 1
 
-        most_commits = df.nlargest(10, "commits")
-        print("Top 10 projects by total commits: ", most_commits)
-
-        most_frequent_commits = df.nlargest(10, "commit_frequency")
-        print("Top 10 projects by commit frequency: ", most_frequent_commits)
 
         # Save all data to file every save_interval messages
         if message_count % save_interval == 0:
+            most_commits = df.nlargest(10, "commits")
+            print("Top 10 projects by total commits: ", most_commits)
+
+            most_frequent_commits = df.nlargest(10, "commit_frequency")
+            print("Top 10 projects by commit frequency: ", most_frequent_commits)
+            
             df.sort_values(by="commits", ascending=False, inplace=True)
             df.to_csv("most_commits.csv")
 
