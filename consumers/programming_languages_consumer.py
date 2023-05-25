@@ -40,7 +40,7 @@ while True:
 
         # Save to file every save_interval messages
         if message_count % save_interval == 0:
-            top_languages.to_csv("top_languages.csv")
+            df.to_csv("top_languages.csv")
 
         # Acknowledge processing of message so that it can be deleted
         consumer.acknowledge(msg)

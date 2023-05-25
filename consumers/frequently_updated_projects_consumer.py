@@ -36,9 +36,9 @@ while True:
         most_commits = df.nlargest(10, "commits")
         print("Top 10 frequently updated projects: ", most_commits)
 
-        # Save to file every save_interval messages
+        # Save all data to file every save_interval messages
         if message_count % save_interval == 0:
-            most_commits.to_csv("most_commits.csv")
+            df.to_csv("most_commits.csv")
 
         consumer.acknowledge(msg)
     except Exception as e:
