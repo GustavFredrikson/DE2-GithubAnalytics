@@ -18,6 +18,7 @@ save_interval = 10
 # If file exists, load it
 try:
     df = pd.read_csv("top_languages.csv", index_col="language")
+    df["language"].fillna("No Language", inplace=True)
 except:
     pass
 
