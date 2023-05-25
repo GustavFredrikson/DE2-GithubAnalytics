@@ -16,9 +16,9 @@ declare -A PRODUCER_PODS=(
 )
 
 declare -A CONSUMER_PODS=(
+  ["main-repo-consumer-pod"]="consumers/main_repo_consumer.py"
   ["devops-consumer-pod"]="consumers/devops_consumer.py"
   ["frequently-updated-projects-consumer-pod"]="consumers/frequently_updated_projects_consumer.py"
-  ["main-repo-consumer-pod"]="consumers/main_repo_consumer.py"
   ["programming-languages-consumer-pod"]="consumers/programming_languages_consumer.py"
   ["test-driven-development-consumer-pod"]="consumers/test_driven_development_consumer.py"
 )
