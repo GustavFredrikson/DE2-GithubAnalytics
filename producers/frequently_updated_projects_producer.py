@@ -2,7 +2,8 @@ import pulsar
 import requests
 import json
 from decouple import config
-from datetime import datetime
+from datetime import datetime, timedelta
+import time
 
 TOKEN = config("GITHUB_API_TOKEN")
 HEADERS = {
@@ -12,10 +13,21 @@ HEADERS = {
 }
 COMMITS_BASE_URL = "https://api.github.com/repos/{owner}/{repo}/commits"
 PER_PAGE = 100
+RATE_LIMIT_URL = "https://api.github.com/rate_limit"
 
 client = pulsar.Client("pulsar://localhost:6650")
 consumer = client.subscribe("FrequentlyUpdatedProjectsTopic", "my-subscription")
 producer = client.create_producer("CommitsTopic")
+
+
+def check_rate_limit():
+    response = requests.get(RATE_LIMIT_URL, headers=HEADERS)
+    response.raise_for_status()
+    data = response.json()
+    core_remaining = data["resources"]["core"]["remaining"]
+    core_reset = data["resources"]["core"]["reset"]
+    return core_remaining, core_reset
+
 
 while True:
     msg = consumer.receive()
@@ -29,33 +41,40 @@ while True:
         first_commit_date = None
         last_commit_date = None
         while True:
-            response = requests.get(url, headers=HEADERS, params=params)
-            response.raise_for_status()
+            core_remaining, core_reset = check_rate_limit()
+            if core_remaining < 100:  # Or any threshold you like
+                reset_time = datetime.fromtimestamp(core_reset)
+                sleep_seconds = (reset_time - datetime.now()).total_seconds()
+                print(f"Rate limit low. Sleeping for {sleep_seconds} seconds.")
+                time.sleep(sleep_seconds + 1)
+            else:
+                response = requests.get(url, headers=HEADERS, params=params)
+                response.raise_for_status()
 
-            data = response.json()
-            commits += len(data)
-            if len(data) > 0:
-                current_first_commit_date = datetime.strptime(
-                    data[-1]["commit"]["committer"]["date"], "%Y-%m-%dT%H:%M:%SZ"
-                )
-                current_last_commit_date = datetime.strptime(
-                    data[0]["commit"]["committer"]["date"], "%Y-%m-%dT%H:%M:%SZ"
-                )
+                data = response.json()
+                commits += len(data)
+                if len(data) > 0:
+                    current_first_commit_date = datetime.strptime(
+                        data[-1]["commit"]["committer"]["date"], "%Y-%m-%dT%H:%M:%SZ"
+                    )
+                    current_last_commit_date = datetime.strptime(
+                        data[0]["commit"]["committer"]["date"], "%Y-%m-%dT%H:%M:%SZ"
+                    )
 
-                if (
-                    first_commit_date is None
-                    or current_first_commit_date < first_commit_date
-                ):
-                    first_commit_date = current_first_commit_date
-                if (
-                    last_commit_date is None
-                    or current_last_commit_date > last_commit_date
-                ):
-                    last_commit_date = current_last_commit_date
+                    if (
+                        first_commit_date is None
+                        or current_first_commit_date < first_commit_date
+                    ):
+                        first_commit_date = current_first_commit_date
+                    if (
+                        last_commit_date is None
+                        or current_last_commit_date > last_commit_date
+                    ):
+                        last_commit_date = current_last_commit_date
 
-            if "next" not in response.links:
-                break
-            params["page"] += 1
+                if "next" not in response.links:
+                    break
+                params["page"] += 1
 
         repo_with_commits = repo
         repo_with_commits["commits"] = commits
@@ -66,6 +85,9 @@ while True:
             repo_with_commits["commit_frequency"] = (
                 commits / days_difference
             )  # average commits per day
+
+        repo_with_commits["start_date"] = str(first_commit_date.date())
+        repo_with_commits["end_date"] = str(last_commit_date.date())
 
         producer.send(json.dumps(repo_with_commits).encode("utf-8"))
         consumer.acknowledge(msg)

@@ -5,7 +5,9 @@ import pandas as pd
 client = pulsar.Client("pulsar://localhost:6650")
 consumer = client.subscribe("CommitsTopic", "my-subscription")
 
-df = pd.DataFrame(columns=["name", "commits", "commit_frequency"])
+df = pd.DataFrame(
+    columns=["name", "commits", "commit_frequency", "start_date", "end_date"]
+)
 df.set_index("name", inplace=True)
 
 df["commits"] = df["commits"].astype("int")
@@ -32,9 +34,17 @@ while True:
             df.loc[repo["name"], "commit_frequency"] = (
                 df.loc[repo["name"], "commit_frequency"] + repo["commit_frequency"]
             ) / 2  # Average frequency
+            df.loc[repo["name"], "start_date"] = min(
+                df.loc[repo["name"], "start_date"], repo["start_date"]
+            )
+            df.loc[repo["name"], "end_date"] = max(
+                df.loc[repo["name"], "end_date"], repo["end_date"]
+            )
         else:
             df.at[repo["name"], "commits"] = int(repo["commits"])  # Ensure it's integer
             df.at[repo["name"], "commit_frequency"] = repo["commit_frequency"]
+            df.at[repo["name"], "start_date"] = repo["start_date"]
+            df.at[repo["name"], "end_date"] = repo["end_date"]
 
         message_count += 1
 
