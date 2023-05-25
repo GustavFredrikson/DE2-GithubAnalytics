@@ -13,7 +13,7 @@ df.set_index("language", inplace=True)
 df["count"] = df["count"].astype("int")
 
 message_count = 0
-save_interval = 1000
+save_interval = 10
 
 # If file exists, load it
 try:
