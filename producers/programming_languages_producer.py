@@ -1,5 +1,9 @@
 import pulsar
 import json
+import logging
+
+# Configure the logging settings
+logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
@@ -10,7 +14,7 @@ while True:
     try:
         msg = consumer.receive()
         repo = json.loads(msg.data())
-        print(f"Received message: '{repo}' id='{msg.message_id()}'")
+        # print(f"Received message: '{repo}' id='{msg.message_id()}'")
 
         # Forward data to the ProgrammingLanguagesTopic
         producer.send(
@@ -23,5 +27,6 @@ while True:
         consumer.acknowledge(msg)
     except Exception as e:
         print("Error: ", e)
+        logging.error(e)
 
 client.close()

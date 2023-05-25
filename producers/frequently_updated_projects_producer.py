@@ -4,6 +4,10 @@ import json
 from decouple import config
 from datetime import datetime, timedelta
 import time
+import logging
+
+# Configure the logging settings
+logging.basicConfig(level=logging.INFO, filename='app.log', filemode='a')
 
 TOKEN = config("GITHUB_API_TOKEN")
 HEADERS = {
@@ -46,6 +50,7 @@ while True:
                 reset_time = datetime.fromtimestamp(core_reset)
                 sleep_seconds = (reset_time - datetime.now()).total_seconds()
                 print(f"Rate limit low. Sleeping for {sleep_seconds} seconds.")
+                logging.info(f"Rate limit low. Sleeping for {sleep_seconds} seconds.")
                 time.sleep(sleep_seconds + 1)
             else:
                 response = requests.get(url, headers=HEADERS, params=params)

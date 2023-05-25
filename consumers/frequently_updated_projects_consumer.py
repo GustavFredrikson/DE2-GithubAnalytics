@@ -1,6 +1,10 @@
 import pulsar
 import json
 import pandas as pd
+import logging
+
+# Configure the logging settings
+logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 consumer = client.subscribe("CommitsTopic", "my-subscription")
@@ -50,9 +54,11 @@ while True:
 
         most_commits = df.nlargest(10, "commits")
         print("Top 10 projects by total commits: ", most_commits)
+        logging.info("Top 10 projects by total commits: ", most_commits)
 
         most_frequent_commits = df.nlargest(10, "commit_frequency")
         print("Top 10 projects by commit frequency: ", most_frequent_commits)
+        logging.info("Top 10 projects by commit frequency: ", most_frequent_commits)
 
         # Save all data to file every save_interval messages
         if message_count % save_interval == 0:
@@ -62,5 +68,6 @@ while True:
         consumer.acknowledge(msg)
     except Exception as e:
         print("Error: ", e)
+        logging.error("Error: ", e)
 
 client.close()
