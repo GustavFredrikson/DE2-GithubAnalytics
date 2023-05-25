@@ -56,6 +56,7 @@ while True:
 
         # Save all data to file every save_interval messages
         if message_count % save_interval == 0:
+            df.sort_values(by="commits", ascending=False, inplace=True)
             df.to_csv("most_commits.csv")
 
         consumer.acknowledge(msg)
