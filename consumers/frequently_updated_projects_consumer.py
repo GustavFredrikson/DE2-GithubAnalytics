@@ -1,66 +1,73 @@
 import pulsar
 import json
-import pandas as pd
+from pymongo import MongoClient
 
 # Configure the logging settings
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 consumer = client.subscribe("CommitsTopic", "my-subscription")
 
-df = pd.DataFrame(
-    columns=["name", "commits", "commit_frequency", "start_date", "end_date"]
+mongo_client = MongoClient(
+    "mongodb://gustavfredrikson:my-password@my-mongodb.default.svc.cluster.local:27017/my-database"
 )
-df.set_index("name", inplace=True)
 
-df["commits"] = df["commits"].astype("int")
-df["commit_frequency"] = df["commit_frequency"].astype("float")
+db = mongo_client.my_database  # Use your database name here
+collection = db.commits  # Use your collection name here
 
 message_count = 0
 save_interval = 10
-
-# If file exists, load it
-# try:
-#     df = pd.read_csv("most_commits.csv", index_col="name")
-# except FileNotFoundError:
-#     pass
 
 while True:
     try:
         msg = consumer.receive()
         repo = json.loads(msg.data())
 
-        if repo["name"] in df.index:
-            df.loc[repo["name"], "commits"] += int(
-                repo["commits"]
-            )  # Ensure it's integer
-            df.loc[repo["name"], "commit_frequency"] = (
-                df.loc[repo["name"], "commit_frequency"] + repo["commit_frequency"]
-            ) / 2  # Average frequency
-            df.loc[repo["name"], "start_date"] = min(
-                df.loc[repo["name"], "start_date"], repo["start_date"]
+        repo_name = repo["name"]
+        repo_record = collection.find_one({"name": repo_name})
+
+        if repo_record:
+            collection.update_one(
+                {"name": repo_name},
+                {
+                    "$inc": {"commits": int(repo["commits"])},  # Ensure it's integer
+                    "$set": {
+                        "commit_frequency": (
+                            repo_record["commit_frequency"] + repo["commit_frequency"]
+                        )
+                        / 2
+                    },
+                },  # Average frequency
             )
-            df.loc[repo["name"], "end_date"] = max(
-                df.loc[repo["name"], "end_date"], repo["end_date"]
-            )
+            if repo["start_date"] < repo_record["start_date"]:
+                collection.update_one(
+                    {"name": repo_name}, {"$set": {"start_date": repo["start_date"]}}
+                )
+            if repo["end_date"] > repo_record["end_date"]:
+                collection.update_one(
+                    {"name": repo_name}, {"$set": {"end_date": repo["end_date"]}}
+                )
         else:
-            df.at[repo["name"], "commits"] = int(repo["commits"])  # Ensure it's integer
-            df.at[repo["name"], "commit_frequency"] = repo["commit_frequency"]
-            df.at[repo["name"], "start_date"] = repo["start_date"]
-            df.at[repo["name"], "end_date"] = repo["end_date"]
+            collection.insert_one(
+                {
+                    "name": repo_name,
+                    "commits": int(repo["commits"]),  # Ensure it's integer
+                    "commit_frequency": repo["commit_frequency"],
+                    "start_date": repo["start_date"],
+                    "end_date": repo["end_date"],
+                }
+            )
 
         message_count += 1
 
-
-        # Save all data to file every save_interval messages
+        # Print top 10 projects every save_interval messages
         if message_count % save_interval == 0:
-            most_commits = df.nlargest(10, "commits")
+            most_commits = list(collection.find().sort("commits", -1).limit(10))
             print("Top 10 projects by total commits: ", most_commits)
 
-            most_frequent_commits = df.nlargest(10, "commit_frequency")
+            most_frequent_commits = list(
+                collection.find().sort("commit_frequency", -1).limit(10)
+            )
             print("Top 10 projects by commit frequency: ", most_frequent_commits)
-
-            df.sort_values(by="commits", ascending=False, inplace=True)
-            df.to_csv("most_commits.csv")
 
         consumer.acknowledge(msg)
     except Exception as e:
