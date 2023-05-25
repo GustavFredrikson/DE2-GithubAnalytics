@@ -10,7 +10,7 @@ fi
 mkdir -p /home/ubuntu/DE2-GithubAnalytics/logs/
 
 # Step 1.5 Remove previous logs
-rm /home/ubuntu/DE2-GithubAnalytics/logs/*.log
+rm /home/ubuntu/DE2-GithubAnalytics/logs/*
 
 # Step 2: Install Python packages
 pip3 freeze | xargs pip3 uninstall -y
