@@ -26,14 +26,14 @@ while True:
         msg = consumer.receive()
         repo = json.loads(msg.data())
 
-        # If no language is specified, set it to "No Language"
-        language = repo["language"] if repo["language"] else "No Language"
-
         # Update the DataFrame with the language of the new repository
         if repo["language"] in df.index:
             df.loc[repo["language"], "count"] += 1
         else:
             df.at[repo["language"], "count"] = 1
+
+        # Fill NA values in language column with "No Language"
+        df["language"].fillna("No Language", inplace=True)
 
         message_count += 1
 
