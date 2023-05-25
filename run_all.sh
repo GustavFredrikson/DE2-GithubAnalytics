@@ -46,6 +46,8 @@ function create_and_run_pod {
     echo "Listing all available pods..."
     microk8s kubectl get pods --namespace=$NAMESPACE
 
+    # Starting port forwarding
+    microk8s kubectl port-forward pulsar-proxy-0 6650:6650 -n pulsar
 
     # Check the status of the pod
     echo "Checking status for pod $POD_NAME..."
