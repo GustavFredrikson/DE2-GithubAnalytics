@@ -26,6 +26,8 @@ while True:
         msg = consumer.receive()
         repo = json.loads(msg.data())
 
+        print(f"Received message: '{repo}' id='{msg.message_id()}'")
+
         # Update the DataFrame with the language of the new repository
         if repo["language"] in df.index:
             df.loc[repo["language"], "count"] += 1
