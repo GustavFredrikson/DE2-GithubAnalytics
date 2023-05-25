@@ -2,7 +2,7 @@ import pulsar
 import json
 import pandas as pd
 
-client = pulsar.Client("pulsar://localhost:6650")
+client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
 consumer = client.subscribe("LanguagesTopic", "my-subscription")
 

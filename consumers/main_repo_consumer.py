@@ -1,7 +1,7 @@
 import pulsar
 import json
 
-client = pulsar.Client("pulsar://localhost:6650")
+client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
 consumer = client.subscribe("MainGithubRepoTopic", "my-subscription")
 
