@@ -1,3 +1,4 @@
+# Dockerfile used as bulding the docker image used in the nodes
 # Start with a base image containing Python runtime
 FROM python:3.8-slim-buster
 
