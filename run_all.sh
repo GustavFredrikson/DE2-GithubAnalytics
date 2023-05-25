@@ -53,11 +53,11 @@ function create_and_run_pod {
 
     # Copy the script to the pod
     echo "Copying script $SCRIPT_NAME to pod $POD_NAME..."
-    microk8s kubectl cp $SCRIPT_NAME $NAMESPACE/$POD_NAME:/tmp/
+    microk8s kubectl cp $SCRIPT_NAME $NAMESPACE/$POD_NAME:/tmp/$(basename $SCRIPT_NAME)
 
     # Run the script in the pod
     echo "Running script $SCRIPT_NAME in pod $POD_NAME..."
-    microk8s kubectl exec $POD_NAME -n $NAMESPACE -- /bin/bash -c "python /tmp/$SCRIPT_NAME"
+    microk8s kubectl exec $POD_NAME -n $NAMESPACE -- /bin/bash -c "python /tmp/$(basename $SCRIPT_NAME)"
   done
 }
 
