@@ -19,10 +19,10 @@ message_count = 0
 save_interval = 10
 
 # If file exists, load it
-try:
-    df = pd.read_csv("most_commits.csv", index_col="name")
-except FileNotFoundError:
-    pass
+# try:
+#     df = pd.read_csv("most_commits.csv", index_col="name")
+# except FileNotFoundError:
+#     pass
 
 while True:
     try:
@@ -58,7 +58,7 @@ while True:
 
             most_frequent_commits = df.nlargest(10, "commit_frequency")
             print("Top 10 projects by commit frequency: ", most_frequent_commits)
-            
+
             df.sort_values(by="commits", ascending=False, inplace=True)
             df.to_csv("most_commits.csv")
 
