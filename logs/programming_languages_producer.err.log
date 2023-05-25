@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/home/ubuntu/DE2-GithubAnalytics/producers/programming_languages_producer.py", line 6, in <module>
-    consumer = client.subscribe("ProgrammingLanguagesTopic", "my-subscription")
-  File "/usr/local/lib/python3.8/dist-packages/pulsar/__init__.py", line 803, in subscribe
-    c._consumer = self._client.subscribe(topic, subscription_name, conf)
-_pulsar.ConnectError: Pulsar error: ConnectError
