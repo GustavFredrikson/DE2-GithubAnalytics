@@ -35,7 +35,7 @@ function create_and_run_pod {
 
     # Wait for the pod to be ready
     echo "Waiting for pod $POD_NAME to be ready..."
-    microk8s kubectl wait --namespace=$NAMESPACE --for=condition=ready pod/$POD_NAME --timeout=60s
+    microk8s kubectl wait --namespace=$NAMESPACE --for=condition=ready pod/$POD_NAME --timeout=200s
 
     # Copy the script to the pod
     echo "Copying script $SCRIPT_NAME to pod $POD_NAME..."
