@@ -14,7 +14,6 @@ while True:
     try:
         msg = consumer.receive()
         repo = json.loads(msg.data())
-        print(f"Received message: '{repo}' id='{msg.message_id()}'")
 
         # Forward data to other topics, TODO: only send necessary data
         producer_languages.send(json.dumps(repo).encode("utf-8"))
