@@ -1,9 +1,5 @@
 import pulsar
 import json
-import logging
-
-# Configure the logging settings
-logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
@@ -30,6 +26,5 @@ while True:
         consumer.acknowledge(msg)
     except Exception as e:
         print("Error: ", e)
-        logging.error(e)
 
 client.close()

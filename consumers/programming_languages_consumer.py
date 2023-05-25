@@ -1,10 +1,6 @@
 import pulsar
 import json
 import pandas as pd
-import logging
-
-# Configure the logging settings
-logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
@@ -44,7 +40,6 @@ while True:
         # Calculate and print the top 10 languages
         top_languages = df.nlargest(10, "count")
         print("Top 10 languages: ", top_languages)
-        logging.info("Top 10 languages: ", top_languages)
 
         # Save to file every save_interval messages
         if message_count % save_interval == 0:
@@ -56,6 +51,5 @@ while True:
         consumer.acknowledge(msg)
     except Exception as e:
         print("Error: ", e)
-        logging.error("Error: ", e)
 
 client.close()
