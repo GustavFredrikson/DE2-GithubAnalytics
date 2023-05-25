@@ -47,6 +47,7 @@ function create_and_run_pod {
     microk8s kubectl get pods --namespace=$NAMESPACE
 
     # Starting port forwarding
+    echo "Starting port forwarding for pod $POD_NAME..."
     microk8s kubectl port-forward pulsar-proxy-0 6650:6650 -n pulsar
 
     # Check the status of the pod
