@@ -17,14 +17,9 @@ save_interval = 10
 
 # If file exists, load it
 try:
-    df = pd.read_csv("top_languages.csv", index_col="language")
+    df = pd.read_csv("most_commits.csv", index_col="name")
 except FileNotFoundError:
-    df = pd.DataFrame(columns=["language", "count"])
-    df.set_index("language", inplace=True)
-    df["count"] = df["count"].astype("int")
-
-# Fill N/A values
-df["language"].fillna("No Language", inplace=True)
+    pass
 
 try:
     while True:
