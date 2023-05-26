@@ -13,7 +13,7 @@ df.set_index("language", inplace=True)
 df["count"] = df["count"].astype("int")
 
 message_count = 0
-save_interval = 10
+save_interval = 1000
 
 try:
     while True:
@@ -33,7 +33,7 @@ try:
         # Save to file every save_interval messages
         if message_count % save_interval == 0:
             top_languages = df.nlargest(10, "count")
-            print("Top 10 languages: ", top_languages)
+            # print("Top 10 languages: ", top_languages)
             df.sort_values(by="count", ascending=False, inplace=True)
             df.to_csv("top_languages.csv")
 
