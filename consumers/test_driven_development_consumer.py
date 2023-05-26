@@ -10,6 +10,9 @@ df.set_index("language", inplace=True)
 
 df["count"] = df["count"].astype("int")
 
+with open("tdd_consumer.log", "w") as f:
+    print("Starting TDD Consumer", file=f)
+
 message_count = 0
 save_interval = 10
 
@@ -28,12 +31,17 @@ while True:
         message_count += 1
 
         # Save all data to file every save_interval messages
-        if message_count % save_interval == 0:
-            top_languages = df.nlargest(10, "count")
-            print("Top 10 languages by number of projects using TDD: ", top_languages)
+        top_languages = df.nlargest(10, "count")
+        print("Top 10 languages by number of projects using TDD: ", top_languages)
+        with open("tdd_consumer.log", "a") as f:
+            print(
+                "Top 10 languages by number of projects using TDD: ",
+                top_languages,
+                file=f,
+            )
 
-            df.sort_values(by="count", ascending=False, inplace=True)
-            df.to_csv("tdd_counts.csv")
+        df.sort_values(by="count", ascending=False, inplace=True)
+        df.to_csv("tdd_counts.csv")
 
         consumer.acknowledge(msg)
     except Exception as e:
