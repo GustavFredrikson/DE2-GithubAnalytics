@@ -98,6 +98,9 @@ while True:
                 f"Skipping repository: {repo['full_name']} - {e.response.status_code} (fupp)"
             )
             continue
+        else:
+            print(f"Error: {e.response.status_code} - {e.response.reason}")
+            consumer.acknowledge(msg)
     except Exception as e:
         print("Error: ", e)
         consumer.acknowledge(msg)
