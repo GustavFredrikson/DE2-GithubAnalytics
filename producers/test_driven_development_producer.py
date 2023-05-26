@@ -51,11 +51,10 @@ while True:
             workflows = data["workflows"]
             print(f"Found {len(workflows)} workflows for {repo['name']}")
             print(f"The workflows are: {workflows}")
-            
-            repo["uses_tdd"] = any(
-                workflow["name"].lower() == "test" for workflow in workflows
-            )
 
+            repo["uses_tdd"] = any(
+                "test" in workflow["name"].lower() for workflow in workflows
+            )
             producer.send(json.dumps(repo).encode("utf-8"))
 
             repo_with_workflows = repo.copy()  # create a copy of repo
