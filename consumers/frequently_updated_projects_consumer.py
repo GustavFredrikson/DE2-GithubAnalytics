@@ -19,10 +19,10 @@ message_count = 0
 save_interval = 10
 
 # If file exists, load it
-# try:
-#     df = pd.read_csv("most_commits.csv", index_col="name")
-# except FileNotFoundError:
-#     pass
+try:
+    df = pd.read_csv("most_commits.csv", index_col="name")
+except FileNotFoundError:
+    pass
 
 while True:
     try:
@@ -49,7 +49,6 @@ while True:
             df.at[repo["name"], "end_date"] = repo["end_date"]
 
         message_count += 1
-
 
         # Save all data to file every save_interval messages
         if message_count % save_interval == 0:
