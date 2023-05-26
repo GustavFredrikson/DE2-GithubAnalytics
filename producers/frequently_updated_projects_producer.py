@@ -95,7 +95,7 @@ while True:
         if e.response.status_code in {403, 404, 409}:
             # The repository is empty, was deleted or only contains git submodules, skip it
             print(
-                f"Skipping repository: {repo['full_name']} - {e.response.status_code}"
+                f"Skipping repository: {repo['full_name']} - {e.response.status_code} (fupp)"
             )
             continue
     except Exception as e:
