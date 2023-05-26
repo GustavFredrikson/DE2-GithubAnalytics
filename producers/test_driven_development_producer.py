@@ -49,6 +49,9 @@ while True:
 
             data = response.json()
             workflows = data["workflows"]
+            print(f"Found {len(workflows)} workflows for {repo['name']}")
+            print(f"The workflows are: {workflows}")
+            
             repo["uses_tdd"] = any(
                 workflow["name"].lower() == "test" for workflow in workflows
             )

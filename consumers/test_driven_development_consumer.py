@@ -28,20 +28,20 @@ while True:
                 else:
                     df.at[language, "count"] = 1
 
-        message_count += 1
+            message_count += 1
 
-        # Save all data to file every save_interval messages
-        top_languages = df.nlargest(10, "count")
-        print("Top 10 languages by number of projects using TDD: ", top_languages)
-        with open("tdd_consumer.log", "a") as f:
-            print(
-                "Top 10 languages by number of projects using TDD: ",
-                top_languages,
-                file=f,
-            )
+            # Save all data to file every save_interval messages
+            top_languages = df.nlargest(10, "count")
+            print("Top 10 languages by number of projects using TDD: ", top_languages)
+            with open("tdd_consumer.log", "a") as f:
+                print(
+                    "Top 10 languages by number of projects using TDD: ",
+                    top_languages,
+                    file=f,
+                )
 
-        df.sort_values(by="count", ascending=False, inplace=True)
-        df.to_csv("tdd_counts.csv")
+            df.sort_values(by="count", ascending=False, inplace=True)
+            df.to_csv("tdd_counts.csv")
 
         consumer.acknowledge(msg)
     except Exception as e:
