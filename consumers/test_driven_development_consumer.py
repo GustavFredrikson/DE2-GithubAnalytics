@@ -43,6 +43,8 @@ while True:
 
         consumer.acknowledge(msg)
     except Exception as e:
+        with open("tdd_consumer.log", "a") as f:
+            print(e, file=f)
         print("Error: ", e)
 
 client.close()

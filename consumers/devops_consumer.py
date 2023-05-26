@@ -54,6 +54,8 @@ while True:
 
         consumer.acknowledge(msg)
     except Exception as e:
-        print("Error: ", e)
+        with open("devops_consumer.log", "a") as f:
+            print(e, file=f)
+        print(e)
 
 client.close()
