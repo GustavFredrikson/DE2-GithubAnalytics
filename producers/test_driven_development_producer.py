@@ -30,7 +30,10 @@ def check_rate_limit():
     return core_remaining, core_reset
 
 
+count = 0
 while True:
+    print(f"TDD Producer count: {count}")
+    count += 1
     try:
         msg = consumer.receive()
         repo = json.loads(msg.data())

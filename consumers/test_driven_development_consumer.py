@@ -16,13 +16,16 @@ with open("tdd_consumer.log", "w") as f:
 message_count = 0
 save_interval = 10
 
+count = 0
 while True:
+    print(f"TDD Consumer: {count}")
+    count += 1
     try:
         msg = consumer.receive()
         repo = json.loads(msg.data())
 
         if repo["uses_tdd"]:
-            for language in repo["languages"]:
+            for language in repo.get("languages", ["No Language"]):
                 if language in df.index:
                     df.loc[language, "count"] += 1
                 else:
