@@ -60,7 +60,7 @@ function create_and_run_pod {
 
     # Wait for the pod to be ready
     echo "Waiting for pod $POD_NAME to be ready..."
-    microk8s kubectl wait --namespace=$NAMESPACE --for=condition=ready pod/$POD_NAME
+    microk8s kubectl wait --namespace=$NAMESPACE --for=condition=ready pod/$POD_NAME --timeout=120s
 
     # List the available pods
     echo "Listing all available pods..."
