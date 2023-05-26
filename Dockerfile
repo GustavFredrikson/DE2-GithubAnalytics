@@ -6,10 +6,9 @@ FROM python:3.8-slim-buster
 LABEL maintainer="gustavfredrikson@gmail.com"
 
 # Set the working directory in the Docker image
-WORKDIR /app
+WORKDIR /tmp
 
-# Copy the current directory contents into the container at /app
-ADD . /app
+ADD requirements.txt /tmp
 
 # Install system level dependencies for pycairo and systemd
 RUN apt-get update && apt-get install -y \
@@ -22,12 +21,3 @@ RUN apt-get update && apt-get install -y \
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Make port 80 available to the world outside this container
-EXPOSE 80
-
-# Define environment variable
-ENV NAME World
-
-# Run python when the container launches
-CMD ["python", "app.py"]
