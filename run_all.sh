@@ -75,28 +75,28 @@ function create_and_run_pod {
     microk8s kubectl cp .env $NAMESPACE/$POD_NAME:/tmp/.env
 
     # If it is frequently-updated-projects-consumer-pod, copy most_commits.csv to the pod
-    if [ $POD_NAME == "frequently-updated-projects-consumer-pod" ]; then
-      echo "Copying most_commits.csv to pod $POD_NAME..."
-      microk8s kubectl cp most_commits.csv $NAMESPACE/$POD_NAME:/tmp/most_commits.csv
-    fi
+    # if [ $POD_NAME == "frequently-updated-projects-consumer-pod" ]; then
+    #   echo "Copying most_commits.csv to pod $POD_NAME..."
+    #   microk8s kubectl cp most_commits.csv $NAMESPACE/$POD_NAME:/tmp/most_commits.csv
+    # fi
 
-    # If it is programming-languages-consumer-pod, copy top_languages.csv to the pod
-    if [ $POD_NAME == "programming-languages-consumer-pod" ]; then
-      echo "Copying top_languages.csv to pod $POD_NAME..."
-      microk8s kubectl cp top_languages.csv $NAMESPACE/$POD_NAME:/tmp/top_languages.csv
-    fi
+    # # If it is programming-languages-consumer-pod, copy top_languages.csv to the pod
+    # if [ $POD_NAME == "programming-languages-consumer-pod" ]; then
+    #   echo "Copying top_languages.csv to pod $POD_NAME..."
+    #   microk8s kubectl cp top_languages.csv $NAMESPACE/$POD_NAME:/tmp/top_languages.csv
+    # fi
 
-    # If it is test-driven-development-consumer-pod, copy tdd_counts.csv to the pod
-    if [ $POD_NAME == "test-driven-development-consumer-pod" ]; then
-      echo "Copying tdd_counts.csv to pod $POD_NAME..."
-      microk8s kubectl cp tdd_counts.csv $NAMESPACE/$POD_NAME:/tmp/tdd_counts.csv
-    fi
+    # # If it is test-driven-development-consumer-pod, copy tdd_counts.csv to the pod
+    # if [ $POD_NAME == "test-driven-development-consumer-pod" ]; then
+    #   echo "Copying tdd_counts.csv to pod $POD_NAME..."
+    #   microk8s kubectl cp tdd_counts.csv $NAMESPACE/$POD_NAME:/tmp/tdd_counts.csv
+    # fi
 
-    # If it is devops-consumer-pod, copy tdd_devops_counts.csv to the pod
-    if [ $POD_NAME == "devops-consumer-pod" ]; then
-      echo "Copying tdd_devops_counts.csv to pod $POD_NAME..."
-      microk8s kubectl cp tdd_devops_counts.csv $NAMESPACE/$POD_NAME:/tmp/tdd_devops_counts.csv
-    fi
+    # # If it is devops-consumer-pod, copy tdd_devops_counts.csv to the pod
+    # if [ $POD_NAME == "devops-consumer-pod" ]; then
+    #   echo "Copying tdd_devops_counts.csv to pod $POD_NAME..."
+    #   microk8s kubectl cp tdd_devops_counts.csv $NAMESPACE/$POD_NAME:/tmp/tdd_devops_counts.csv
+    # fi
 
     # Run the script in the pod
     echo "Running script $SCRIPT_NAME in pod $POD_NAME..."
