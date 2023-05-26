@@ -16,8 +16,10 @@ save_interval = 10
 # If file exists, load it
 try:
     df = pd.read_csv("tdd_devops_counts.csv", index_col="language")
+    df["count"] = df["count"].astype("int")
 except FileNotFoundError:
     pass
+
 
 # DevOps-related keywords
 devops_keywords = ["continuous integration", "ci", "cd", "pipeline"]

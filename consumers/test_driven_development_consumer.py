@@ -16,6 +16,7 @@ save_interval = 10
 # If file exists, load it
 try:
     df = pd.read_csv("tdd_counts.csv", index_col="language")
+    df["count"] = df["count"].astype("int")
 except FileNotFoundError:
     pass
 
