@@ -106,6 +106,7 @@ def fetch_commits_for_row(row):
 
 def analyze_repos(repos):
     # Convert the list of repos to a DataFrame
+    print(repos)
     df = pd.DataFrame(repos)
 
     # Fetch the number of commits for each repository

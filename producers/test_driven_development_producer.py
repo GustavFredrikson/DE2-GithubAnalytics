@@ -16,8 +16,9 @@ WORKFLOWS_BASE_URL = "https://api.github.com/repos/{owner}/{repo}/actions/workfl
 RATE_LIMIT_URL = "https://api.github.com/rate_limit"
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
-consumer = client.subscribe("MainGitHubRepositoryInfoTopic", "my-subscription")
-producer = client.create_producer("TestDrivenDevelopmentTopic")
+consumer = client.subscribe("TestDrivenDevelopmentTopic", "my-subscription")
+producer = client.create_producer("TDDTopic")
+devops_producer = client.create_producer("TddToDevOpsTopic")
 
 
 def check_rate_limit():
@@ -30,12 +31,12 @@ def check_rate_limit():
 
 
 while True:
-    msg = consumer.receive()
-    repo = json.loads(msg.data())
-
-    url = WORKFLOWS_BASE_URL.format(owner=repo["owner"]["login"], repo=repo["name"])
-
     try:
+        msg = consumer.receive()
+        repo = json.loads(msg.data())
+
+        url = WORKFLOWS_BASE_URL.format(owner=repo["owner"]["login"], repo=repo["name"])
+
         core_remaining, core_reset = check_rate_limit()
         if core_remaining < 100:  # Or any threshold you like
             reset_time = datetime.fromtimestamp(core_reset)
@@ -53,9 +54,24 @@ while True:
             )
 
             producer.send(json.dumps(repo).encode("utf-8"))
+
+            repo_with_workflows = repo.copy()  # create a copy of repo
+            repo_with_workflows["workflows"] = workflows  # add workflows to repo data
+            devops_producer.send(json.dumps(repo_with_workflows).encode("utf-8"))
+
             consumer.acknowledge(msg)
 
     except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 429:  # Too Many Requests
+            core_remaining, core_reset = check_rate_limit()
+            reset_time = datetime.fromtimestamp(core_reset)
+            sleep_seconds = (reset_time - datetime.now()).total_seconds()
+            print(f"Rate limit exceeded. Sleeping for {sleep_seconds} seconds.")
+            time.sleep(sleep_seconds + 1)
+        else:
+            print(e)
+            consumer.acknowledge(msg)
+    except Exception as e:
         print(e)
         consumer.acknowledge(msg)
 

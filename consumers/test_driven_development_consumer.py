@@ -1,23 +1,48 @@
 import pulsar
 import json
-from collections import defaultdict
+import pandas as pd
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
-consumer = client.subscribe("TestDrivenDevelopmentTopic", "my-subscription")
+consumer = client.subscribe("TDDTopic", "my-subscription")
 
-language_tdd_counts = defaultdict(int)
+df = pd.DataFrame(columns=["language", "count"])
+df.set_index("language", inplace=True)
+
+df["count"] = df["count"].astype("int")
+
+message_count = 0
+save_interval = 10
+
+# If file exists, load it
+try:
+    df = pd.read_csv("tdd_counts.csv", index_col="language")
+except FileNotFoundError:
+    pass
 
 while True:
-    msg = consumer.receive()
-    repo = json.loads(msg.data())
+    try:
+        msg = consumer.receive()
+        repo = json.loads(msg.data())
 
-    if repo["uses_tdd"]:
-        for language in repo["languages"]:
-            language_tdd_counts[language] += 1
+        if repo["uses_tdd"]:
+            for language in repo["languages"]:
+                if language in df.index:
+                    df.loc[language, "count"] += 1
+                else:
+                    df.at[language, "count"] = 1
 
-    consumer.acknowledge(msg)
+        message_count += 1
 
-# At this point, `language_tdd_counts` contains the counts of projects using TDD for each language.
-# You can sort this dictionary to get the top 10 languages, for example.
+        # Save all data to file every save_interval messages
+        if message_count % save_interval == 0:
+            top_languages = df.nlargest(10, "count")
+            print("Top 10 languages by number of projects using TDD: ", top_languages)
+
+            df.sort_values(by="count", ascending=False, inplace=True)
+            df.to_csv("tdd_counts.csv")
+
+        consumer.acknowledge(msg)
+    except Exception as e:
+        print("Error: ", e)
 
 client.close()
