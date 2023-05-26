@@ -92,7 +92,8 @@ while True:
         producer.send(json.dumps(repo_with_commits).encode("utf-8"))
         consumer.acknowledge(msg)
 
-    except requests.exceptions.HTTPError as e:
+    except Exception as e:
+        print("Error: ", e)
         consumer.acknowledge(msg)
 
 client.close()

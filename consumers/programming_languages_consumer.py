@@ -16,40 +16,39 @@ message_count = 0
 save_interval = 10
 
 # If file exists, load it
-# try:
-#     df = pd.read_csv("top_languages.csv", index_col="language")
-#     df["language"].fillna("No Language", inplace=True)
-# except:
-#     pass
+try:
+    df = pd.read_csv("top_languages.csv", index_col="language")
+    df["language"].fillna("No Language", inplace=True)
+except FileNotFoundError:
+    pass
 
-while True:
-    try:
+try:
+    while True:
         msg = consumer.receive()
         repo = json.loads(msg.data())
 
-        repo_language = repo["language"] if repo["language"] else "No Language"
+        repo_language = repo["language"] if repo.get("language") else "No Language"
 
         # Update the DataFrame with the language of the new repository
-        if repo["language"] in df.index:
-            df.loc[repo["language"], "count"] += 1
+        if repo_language in df.index:
+            df.loc[repo_language, "count"] += 1
         else:
-            df.at[repo["language"], "count"] = 1
+            df.at[repo_language, "count"] = 1
 
         message_count += 1
-
-        # Calculate and print the top 10 languages
 
         # Save to file every save_interval messages
         if message_count % save_interval == 0:
             top_languages = df.nlargest(10, "count")
             print("Top 10 languages: ", top_languages)
-            # Sort it by count
             df.sort_values(by="count", ascending=False, inplace=True)
             df.to_csv("top_languages.csv")
 
         # Acknowledge processing of message so that it can be deleted
         consumer.acknowledge(msg)
-    except Exception as e:
-        print("Error: ", e)
 
-client.close()
+except Exception as e:
+    print("Error: ", e)
+
+finally:
+    client.close()
