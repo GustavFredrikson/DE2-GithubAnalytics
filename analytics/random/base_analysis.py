@@ -55,7 +55,7 @@ def fetch_repos(date):
 
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in {403, 404, 409}:
-                # The repository is empty, was deleted or only contains git submodules, skip it
+                # The repository is empty, was deleted, or only contains git submodules, skip it
                 tqdm.write(f"Skipping repo due to HTTP error: {e}")
                 continue
             else:
@@ -91,7 +91,7 @@ def fetch_commits(owner, repo):
 
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in {403, 404, 409}:
-                # The repository is empty, was deleted or only contains git submodules, skip it
+                # The repository is empty, was deleted, or only contains git submodules, skip it
                 return commits
             else:
                 raise e
@@ -106,7 +106,6 @@ def fetch_commits_for_row(row):
 
 def analyze_repos(repos):
     # Convert the list of repos to a DataFrame
-    print(repos)
     df = pd.DataFrame(repos)
 
     # Fetch the number of commits for each repository
@@ -118,6 +117,23 @@ def analyze_repos(repos):
             )
         )
 
+    # Check if the repository has a 'tests' or 'test' directory
+    def has_tests(repo_name):
+        contents_url = f'https://api.github.com/repos/{repo_name}/contents'
+        contents_response = requests.get(contents_url, headers=HEADERS)
+        contents_data = contents_response.json()
+        return isinstance(contents_data, list) and any(content['name'].lower() in {'tests', 'test'} for content in contents_data)
+
+    df["has_tests"] = df["full_name"].apply(has_tests)
+    # Check if the repository has a CI/CD workflow
+    def has_ci_cd(repo_name):
+        workflows_url = f'https://api.github.com/repos/{repo_name}/actions/workflows'
+        workflows_response = requests.get(workflows_url, headers=HEADERS)
+        workflows_data = workflows_response.json()
+        return any('ci' in workflow['name'].lower() or 'cd' in workflow['name'].lower() for workflow in workflows_data.get('workflows', []))
+
+    df["has_ci_cd"] = df["full_name"].apply(has_ci_cd)
+
     # Q1: Top 10 programming languages based on the number of projects developed
     language_counts = df["language"].value_counts()
     top_languages = language_counts.nlargest(10)
@@ -125,7 +141,13 @@ def analyze_repos(repos):
     # Q2: Top 10 repositories with the most commits
     most_commits = df.nlargest(10, "commits")
 
-    return top_languages, most_commits
+    # Q3: Number of repositories with 'tests' or 'test' directory
+    num_repos_with_tests = df["has_tests"].sum()
+
+    # Q4: Number of repositories with CI/CD workflow
+    num_repos_with_ci_cd = df["has_ci_cd"].sum()
+
+    return top_languages, most_commits, num_repos_with_tests, num_repos_with_ci_cd
 
 
 def plot_data(top_languages, most_commits):
@@ -150,7 +172,8 @@ def plot_data(top_languages, most_commits):
 
 def main():
     # make a list of dates from today to n_days ago
-    dates = [datetime.date.today() - datetime.timedelta(days=i) for i in range(N_DAYS)]
+    dates = [datetime.date.today() - datetime.timedelta(days=i)
+             for i in range(N_DAYS)]
 
     # Fetch the repos created or updated on each date
     repos = [fetch_repos(date) for date in dates]
@@ -159,11 +182,18 @@ def main():
     repos = [repo for sublist in repos for repo in sublist]
 
     # Analyze the repos
-    top_languages, most_frequently_updated = analyze_repos(repos)
+    top_languages, most_frequently_updated, num_repos_with_tests, num_repos_with_ci_cd = analyze_repos(
+        repos)
 
     # Plot the data
     plot_data(top_languages, most_frequently_updated)
 
+    # Print the additional results
+    print(
+        f"Number of repositories with 'tests' or 'test' directory: {num_repos_with_tests}")
+    print(
+        f"Number of repositories with CI/CD workflow: {num_repos_with_ci_cd}")
 
-if __name__ == "__main__":
+
+if name == "main":
     main()
