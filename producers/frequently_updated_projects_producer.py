@@ -91,7 +91,11 @@ while True:
 
         producer.send(json.dumps(repo_with_commits).encode("utf-8"))
         consumer.acknowledge(msg)
-
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code in {403, 404, 409}:
+            # The repository is empty, was deleted or only contains git submodules, skip it
+            print(f"Skipping repository: {repo['full_name']}")
+            continue
     except Exception as e:
         print("Error: ", e)
         consumer.acknowledge(msg)
