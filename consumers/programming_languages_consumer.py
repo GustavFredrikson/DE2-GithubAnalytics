@@ -15,12 +15,6 @@ df["count"] = df["count"].astype("int")
 message_count = 0
 save_interval = 10
 
-# If file exists, load it
-try:
-    df = pd.read_csv("most_commits.csv", index_col="name")
-except FileNotFoundError:
-    pass
-
 try:
     while True:
         msg = consumer.receive()

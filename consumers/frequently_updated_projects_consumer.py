@@ -18,12 +18,6 @@ df["commit_frequency"] = df["commit_frequency"].astype("float")
 message_count = 0
 save_interval = 10
 
-# If file exists, load it
-try:
-    df = pd.read_csv("most_commits.csv", index_col="name")
-except FileNotFoundError:
-    pass
-
 while True:
     try:
         msg = consumer.receive()
