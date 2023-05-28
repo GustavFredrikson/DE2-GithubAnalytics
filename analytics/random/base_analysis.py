@@ -195,5 +195,5 @@ def main():
         f"Number of repositories with CI/CD workflow: {num_repos_with_ci_cd}")
 
 
-if name == "main":
+if __name__ == "__main__":
     main()
