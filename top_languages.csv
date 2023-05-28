@@ -1,278 +1,278 @@
 language,count
-No Language,136745.0
-JavaScript,54053.0
-HTML,52466.0
-Python,26206.0
-Java,21421.0
-CSS,16600.0
-TypeScript,11970.0
-Jupyter Notebook,9595.0
-C#,8877.0
-C++,6022.0
-PHP,5024.0
-Shell,4291.0
-C,3942.0
-Kotlin,2360.0
-Dart,1712.0
-Go,1706.0
-Ruby,1655.0
-Swift,1608.0
-Vue,1559.0
-SCSS,1323.0
-Rust,1173.0
-R,945.0
-Dockerfile,839.0
-Lua,784.0
-HCL,679.0
-EJS,518.0
-Solidity,463.0
-MATLAB,350.0
-Makefile,316.0
-ShaderLab,262.0
-TeX,243.0
-PowerShell,241.0
-Assembly,231.0
-Hack,211.0
-Svelte,206.0
-Batchfile,188.0
-Astro,154.0
-TSQL,129.0
-Haskell,128.0
-GDScript,123.0
-Handlebars,116.0
-Visual Basic .NET,115.0
-CMake,112.0
-Blade,111.0
-Pascal,104.0
-Elixir,100.0
-Scala,98.0
-ASP.NET,91.0
-Nix,85.0
-Haxe,85.0
-Verilog,82.0
-Objective-C,74.0
-Processing,74.0
-Smarty,70.0
-Rich Text Format,70.0
-Roff,67.0
-VHDL,66.0
-Julia,64.0
-Groovy,60.0
-Jinja,59.0
-Perl,57.0
-Wollok,51.0
-Papyrus,50.0
-PLpgSQL,48.0
-Rebol,48.0
-Common Lisp,39.0
-Liquid,39.0
-Prolog,38.0
-Apex,37.0
-Clojure,37.0
-Pug,36.0
+No Language,163769.0
+JavaScript,64441.0
+HTML,63607.0
+Python,32105.0
+Java,26055.0
+CSS,20125.0
+TypeScript,14462.0
+Jupyter Notebook,11684.0
+C#,10550.0
+C++,7266.0
+PHP,6109.0
+Shell,5294.0
+C,4855.0
+Kotlin,2826.0
+Go,2046.0
+Dart,2041.0
+Ruby,2003.0
+Swift,1921.0
+Vue,1846.0
+SCSS,1600.0
+Rust,1431.0
+R,1138.0
+Dockerfile,1047.0
+Lua,973.0
+HCL,835.0
+EJS,582.0
+Solidity,552.0
+MATLAB,414.0
+Makefile,390.0
+ShaderLab,318.0
+TeX,294.0
+PowerShell,288.0
+Assembly,267.0
+Svelte,252.0
+Hack,250.0
+Batchfile,248.0
+Astro,192.0
+TSQL,156.0
+Blade,152.0
+Haskell,150.0
+Visual Basic .NET,145.0
+GDScript,145.0
+Handlebars,144.0
+CMake,142.0
+Pascal,123.0
+Scala,121.0
+Elixir,115.0
+ASP.NET,112.0
+Verilog,102.0
+Nix,101.0
+Smarty,92.0
+Haxe,90.0
+Objective-C,90.0
+Processing,87.0
+Rich Text Format,83.0
+Wollok,83.0
+Roff,81.0
+VHDL,78.0
+Groovy,73.0
+Jinja,72.0
+Julia,72.0
+Perl,68.0
+Papyrus,65.0
+Rebol,59.0
+PLpgSQL,54.0
+Liquid,48.0
+Prolog,47.0
+Clojure,47.0
+Pug,44.0
+Common Lisp,43.0
+Apex,42.0
+Mathematica,40.0
+Vim Script,40.0
+Gherkin,38.0
+SystemVerilog,37.0
+AutoHotkey,36.0
 Vim script,35.0
-Gherkin,35.0
-Mathematica,33.0
-Vim Script,33.0
-Less,31.0
-VBA,30.0
-AutoHotkey,30.0
-SystemVerilog,28.0
-Fortran,27.0
-OCaml,26.0
-Portugol,25.0
-PLSQL,24.0
-Tcl,24.0
-PureBasic,23.0
-Yacc,23.0
-Cuda,23.0
-Starlark,23.0
-VBScript,22.0
-Stata,22.0
-XSLT,22.0
-Sass,22.0
-Nunjucks,21.0
-Zig,21.0
-OpenSCAD,21.0
-Racket,20.0
-DIGITAL Command Language,20.0
-Emacs Lisp,20.0
-Bicep,19.0
-Scheme,19.0
-Markdown,18.0
-Mustache,18.0
-QML,18.0
-SAS,18.0
-Twig,18.0
-Elm,17.0
-RobotFramework,17.0
-G-code,16.0
-SWIG,15.0
-Visual Basic 6.0,14.0
-Erlang,14.0
-mcfunction,13.0
-LabVIEW,13.0
-GLSL,13.0
-Nim,13.0
-F#,12.0
+Less,35.0
+VBA,35.0
+Portugol,33.0
+Fortran,32.0
+Yacc,31.0
+Tcl,31.0
+OpenSCAD,29.0
+Cuda,29.0
+PLSQL,28.0
+OCaml,28.0
+Sass,28.0
+PureBasic,27.0
+XSLT,27.0
+Scheme,25.0
+Starlark,25.0
+Stata,24.0
+Nunjucks,24.0
+Bicep,24.0
+Elm,24.0
+VBScript,24.0
+Racket,23.0
+DIGITAL Command Language,23.0
+Zig,23.0
+Emacs Lisp,23.0
+Mustache,23.0
+Twig,22.0
+RobotFramework,21.0
+SAS,21.0
+QML,21.0
+Markdown,19.0
+Visual Basic 6.0,19.0
+G-code,19.0
+SWIG,18.0
+F#,17.0
+Nim,17.0
+Motoko,17.0
+Erlang,17.0
+GLSL,17.0
+ABAP,16.0
+LLVM,16.0
+mcfunction,15.0
+Move,14.0
+LabVIEW,14.0
+ASL,13.0
 V,12.0
-LLVM,11.0
-ASL,11.0
-ABAP,11.0
-Motoko,11.0
+COBOL,12.0
+PostScript,12.0
+Cairo,11.0
+D,11.0
+Max,11.0
+Procfile,10.0
+Ren'Py,10.0
+AutoIt,10.0
 Smalltalk,10.0
-Move,10.0
-GAP,9.0
-PostScript,9.0
-Procfile,9.0
-Crystal,9.0
+MoonScript,10.0
+Crystal,10.0
+GAP,10.0
+SourcePawn,9.0
 Open Policy Agent,9.0
-AutoIt,9.0
-Cairo,9.0
-COBOL,8.0
-Max,8.0
+Brainfuck,9.0
+Game Maker Language,9.0
+Pawn,8.0
+CoffeeScript,8.0
 Lex,8.0
-D,8.0
-SourcePawn,8.0
 kvlang,8.0
-Ren'Py,8.0
-MoonScript,8.0
-SuperCollider,7.0
-Ada,7.0
-Pawn,7.0
-Brainfuck,7.0
-CoffeeScript,7.0
-Scilab,7.0
+Standard ML,8.0
+Io,8.0
 Objective-C++,7.0
-Game Maker Language,7.0
-Io,6.0
-RAML,6.0
+SuperCollider,7.0
+Scilab,7.0
+RAML,7.0
+NetLogo,7.0
+AMPL,7.0
+Ada,7.0
+SQF,7.0
+CLIPS,6.0
+ReScript,6.0
 HLSL,6.0
-NetLogo,6.0
-AMPL,5.0
-ReScript,5.0
-CLIPS,5.0
-Standard ML,5.0
-SQF,5.0
-MQL5,4.0
-DM,4.0
-Inno Setup,4.0
-OpenEdge ABL,4.0
-FreeMarker,4.0
-BASIC,4.0
-Vim Snippet,4.0
-Nextflow,4.0
-Puppet,4.0
+BASIC,5.0
+ZenScript,5.0
+Vim Snippet,5.0
+DM,5.0
+Witcher Script,5.0
+Inno Setup,5.0
+AL,5.0
+Puppet,5.0
+Smali,5.0
+FreeMarker,5.0
+Forth,5.0
 Lean,4.0
+OpenEdge ABL,4.0
+Q#,4.0
+Pep8,4.0
 Vala,4.0
-Smali,4.0
-AL,4.0
+LOLCODE,4.0
+MQL5,4.0
+Nextflow,4.0
 Cadence,4.0
-wdl,3.0
-Raku,3.0
-FreeBasic,3.0
-AppleScript,3.0
-YAML,3.0
-CodeQL,3.0
-Witcher Script,3.0
-M4,3.0
-ZenScript,3.0
+YAML,4.0
+Raku,4.0
+SQL,4.0
 ActionScript,3.0
-Forth,3.0
-Oz,3.0
-Jsonnet,3.0
-AGS Script,3.0
+M,3.0
+Monkey C,3.0
+Cython,3.0
+Squirrel,3.0
+CodeQL,3.0
+wdl,3.0
 Odin,3.0
-M,2.0
-Squirrel,2.0
-TLA,2.0
-xBase,2.0
-LookML,2.0
-StringTemplate,2.0
-BitBake,2.0
-Monkey C,2.0
-CUE,2.0
-Pep8,2.0
-GSC,2.0
+PDDL,3.0
+BitBake,3.0
+CUE,3.0
+Oz,3.0
+FreeBasic,3.0
+AGS Script,3.0
+Stylus,3.0
+AppleScript,3.0
+M4,3.0
+Jsonnet,3.0
+YARA,3.0
 ColdFusion,2.0
-HolyC,2.0
-Classic ASP,2.0
-YARA,2.0
-Cython,2.0
-PDDL,2.0
 Fennel,2.0
+StringTemplate,2.0
+Classic ASP,2.0
 sed,2.0
-SQL,2.0
 Meson,2.0
-LOLCODE,2.0
-Q#,2.0
+HolyC,2.0
+TLA,2.0
+PowerBuilder,2.0
+q,2.0
+GSC,2.0
+NSIS,2.0
+mIRC Script,2.0
+Singularity,2.0
+LookML,2.0
+Ballerina,2.0
+xBase,2.0
+Turing,2.0
+XQuery,2.0
+QMake,2.0
+MLIR,2.0
 Wikitext,2.0
 Logos,2.0
-q,2.0
-mIRC Script,2.0
-PowerBuilder,2.0
-Haml,1.0
-F*,1.0
-Singularity,1.0
-Hy,1.0
-XQuery,1.0
-1C Enterprise,1.0
-AngelScript,1.0
-MQL4,1.0
-XS,1.0
-ANTLR,1.0
-IDL,1.0
-Ballerina,1.0
-Objective-J,1.0
-Mermaid,1.0
+XS,2.0
 Coq,1.0
-Fantom,1.0
-JetBrains MPS,1.0
-Clarity,1.0
-Turing,1.0
-Lasso,1.0
-Latte,1.0
-Genero,1.0
-CAP CDS,1.0
-QMake,1.0
-WebAssembly,1.0
-Genero Forms,1.0
-VCL,1.0
-Slash,1.0
-RenderScript,1.0
 AspectJ,1.0
-Stylus,1.0
-Earthly,1.0
-ObjectScript,1.0
-Janet,1.0
-Altium Designer,1.0
-PigLatin,1.0
-Dhall,1.0
-Sage,1.0
-Mako,1.0
-ImageJ Macro,1.0
-NASL,1.0
-Clarion,1.0
-YASnippet,1.0
-DTrace,1.0
-Gnuplot,1.0
-Awk,1.0
-LilyPond,1.0
-CWeb,1.0
-nesC,1.0
-Nu,1.0
-Boo,1.0
-SQLPL,1.0
-P4,1.0
-MLIR,1.0
-Agda,1.0
-JSON,1.0
-NSIS,1.0
+MQL4,1.0
+ANTLR,1.0
+Latte,1.0
+IDL,1.0
+Slash,1.0
+Hy,1.0
+VCL,1.0
+Haml,1.0
+Genero Forms,1.0
+AngelScript,1.0
+Fantom,1.0
+Mermaid,1.0
+RenderScript,1.0
+F*,1.0
 Modelica,1.0
-Marko,1.0
-Dafny,1.0
-Terra,1.0
-MAXScript,1.0
-UnrealScript,1.0
+Boo,1.0
+ObjectScript,1.0
+Clarity,1.0
+SQLPL,1.0
+JSON,1.0
 Ink,1.0
+Objective-J,1.0
+CAP CDS,1.0
+Genero,1.0
+1C Enterprise,1.0
+Lasso,1.0
+WebAssembly,1.0
+YASnippet,1.0
+Janet,1.0
+Gnuplot,1.0
+ImageJ Macro,1.0
+Clarion,1.0
+Awk,1.0
+Agda,1.0
+UnrealScript,1.0
+Altium Designer,1.0
+Dhall,1.0
+LilyPond,1.0
+Dafny,1.0
+Marko,1.0
+NASL,1.0
+MAXScript,1.0
+Nu,1.0
+P4,1.0
+Mako,1.0
+JetBrains MPS,1.0
+nesC,1.0
+Terra,1.0
+Earthly,1.0
+PigLatin,1.0
+Sage,1.0
+DTrace,1.0
+CWeb,1.0
 APL,1.0
