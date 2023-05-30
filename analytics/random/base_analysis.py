@@ -148,15 +148,13 @@ def analyze_repos(repos):
             for workflow in workflows_data.get("workflows", [])
         )
 
+    # Convert the list of repos to a DataFrame
+    df = pd.DataFrame(repos)
+
     # Q1: Top 10 programming languages based on the number of projects developed
     language_counts = df["language"].value_counts()
     top_languages = language_counts.nlargest(10)
 
-    # Q2: Top 10 repositories with the most commits
-    most_commits = df.nlargest(10, "commits")
-
-    # Convert the list of repos to a DataFrame
-    df = pd.DataFrame(repos)
 
     # Check the rate limit before fetching the number of commits for each repository
     check_rate_limit()
@@ -170,6 +168,8 @@ def analyze_repos(repos):
     check_rate_limit()
     df["has_ci_cd"] = df["full_name"].swifter.apply(has_ci_cd)
 
+    # Q2: Top 10 repositories with the most commits
+    most_commits = df.nlargest(10, "commits")
     # Filter repositories with tests
     df_with_tests = df[df["has_tests"] == True]
 
