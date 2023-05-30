@@ -61,7 +61,7 @@ def fetch_repos(date):
 
     repos = []
     # use tqdm to make a while loop with a progress bar
-    for _ in tqdm(range(1), desc=f"Fetching repos for {date}"):
+    for _ in tqdm(range(10), desc=f"Fetching repos for {date}"):
         try:
             # Make the API request
             response = requests.get(BASE_URL, headers=HEADERS, params=params)
