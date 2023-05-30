@@ -83,19 +83,15 @@ def fetch_repos(date):
 
 
 if __name__ == "__main__":
-    # Define the minimum date to fetch data from
     min_date = datetime.date(2021, 1, 1)  # set to oldest date we want to use
 
-    # Start from today's date
     date = datetime.date.today()
 
     while date >= min_date:
-        # Fetch and send the repositories to the Pulsar topic
         repos = fetch_repos(date)
         for repo in repos:
             producer.send(json.dumps(repo).encode("utf-8"))
 
-        # Go to the previous day
         date -= datetime.timedelta(days=1)
 
     client.close()

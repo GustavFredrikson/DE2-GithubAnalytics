@@ -6,7 +6,6 @@ client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
 consumer = client.subscribe("LanguagesTopic", "my-subscription")
 
-# DataFrame to keep track of language counts
 df = pd.DataFrame(columns=["language", "count"])
 df.set_index("language", inplace=True)
 
@@ -37,7 +36,6 @@ try:
             df.sort_values(by="count", ascending=False, inplace=True)
             df.to_csv("top_languages.csv")
 
-        # Acknowledge processing of message so that it can be deleted
         consumer.acknowledge(msg)
 
 except Exception as e:

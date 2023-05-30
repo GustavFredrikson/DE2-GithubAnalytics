@@ -1,12 +1,10 @@
 #!/bin/bash
 
-# Define the namespace for your pods
 NAMESPACE="default"
 
-# Define your Docker image
+# Docker image name
 IMAGE="gustavfredrikson/de2python"
 
-# Define your pod names and script names
 declare -A PRODUCER_PODS=(
   ["main-repo-producer-pod"]="producers/main_repo_producer.py"
   ["frequently-updated-projects-producer-pod"]="producers/frequently_updated_projects_producer.py"

@@ -2,8 +2,6 @@ import pulsar
 import json
 import pandas as pd
 
-# Configure the logging settings
-
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 consumer = client.subscribe("WorkflowTopic", "my-subscription")
 
@@ -22,7 +20,6 @@ while True:
 
         message_count += 1
 
-        # Save all data to file every save_interval messages
         if message_count % save_interval == 0:
             df.to_csv("devops.csv")
 

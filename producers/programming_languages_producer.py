@@ -1,8 +1,6 @@
 import pulsar
 import json
 
-# Configure the logging settings
-
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
 consumer = client.subscribe("ProgrammingLanguagesTopic", "my-subscription")
@@ -21,7 +19,6 @@ while True:
             )
         )
 
-        # Acknowledge processing of message so that it can be deleted
         consumer.acknowledge(msg)
     except Exception as e:
         print("Error: ", e)

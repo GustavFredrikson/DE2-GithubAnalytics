@@ -2,7 +2,6 @@ import pulsar
 import json
 import pandas as pd
 
-# Configure the logging settings
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 consumer = client.subscribe("CommitsTopic", "my-subscription")

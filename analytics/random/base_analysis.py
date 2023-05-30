@@ -50,7 +50,6 @@ def check_rate_limit(limit=1000):
 
 
 def fetch_repos(date):
-    # Query parameters for the API request
     params = {
         "q": f"created:{date}..{date} pushed:{date}..{date}",
         "sort": "updated",
@@ -60,21 +59,16 @@ def fetch_repos(date):
     }
 
     repos = []
-    # use tqdm to make a while loop with a progress bar
     for _ in tqdm(range(10), desc=f"Fetching repos for {date}"):
         try:
-            # Make the API request
             response = requests.get(BASE_URL, headers=HEADERS, params=params)
             response.raise_for_status()
 
-            # Add the repos from this page to our list
             repos.extend(response.json()["items"])
 
-            # If this is the last page, break out of the loop
             if "next" not in response.links:
                 break
 
-            # Otherwise, increment the page number and continue
             params["page"] += 1
 
         except requests.exceptions.HTTPError as e:
@@ -99,18 +93,14 @@ def fetch_commits(owner, repo):
     commits = 0
     while True:
         try:
-            # Make the API request
             response = requests.get(url, headers=HEADERS, params=params)
             response.raise_for_status()
 
-            # Add the number of commits from this page
             commits += len(response.json())
 
-            # If this is the last page, break out of the loop
             if "next" not in response.links:
                 break
 
-            # Otherwise, increment the page number and continue
             params["page"] += 1
 
         except requests.exceptions.HTTPError as e:
@@ -124,12 +114,10 @@ def fetch_commits(owner, repo):
 
 
 def fetch_commits_for_row(row):
-    # Fetch the number of commits for this repository
     return fetch_commits(row["owner"]["login"], row["name"])
 
 
 def analyze_repos(repos):
-    # Check if the repository has a 'tests' or 'test' directory
     def has_tests(repo_name):
         contents_url = f"https://api.github.com/repos/{repo_name}/contents"
         contents_response = requests.get(contents_url, headers=HEADERS)
@@ -138,7 +126,6 @@ def analyze_repos(repos):
             content["name"].lower() in {"tests", "test"} for content in contents_data
         )
 
-    # Check if the repository has a CI/CD workflow
     def has_ci_cd(repo_name):
         workflows_url = f"https://api.github.com/repos/{repo_name}/actions/workflows"
         workflows_response = requests.get(workflows_url, headers=HEADERS)
@@ -148,14 +135,12 @@ def analyze_repos(repos):
             for workflow in workflows_data.get("workflows", [])
         )
 
-    # Convert the list of repos to a DataFrame
     df = pd.DataFrame(repos)
 
     # Q1: Top 10 programming languages based on the number of projects developed
     language_counts = df["language"].value_counts()
     top_languages = language_counts.nlargest(10)
 
-    # Check the rate limit before fetching the number of commits for each repository
     check_rate_limit(limit=len(df))
     # Fetch the number of commits for each repository
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -166,13 +151,10 @@ def analyze_repos(repos):
             )
         )
 
-    # Function to apply `has_tests` in a concurrent manner
     def apply_has_tests(row):
         return has_tests(row["full_name"])
 
-    # Check the rate limit before checking if the repository has a 'tests' or 'test' directory
     check_rate_limit(limit=len(df))
-    # Apply `has_tests` function concurrently
     with concurrent.futures.ThreadPoolExecutor() as executor:
         df["has_tests"] = list(
             tqdm(
@@ -181,13 +163,10 @@ def analyze_repos(repos):
             )
         )
 
-    # Function to apply `has_ci_cd` in a concurrent manner
     def apply_has_ci_cd(row):
         return has_ci_cd(row["full_name"])
 
-    # Check the rate limit before checking if the repository has a CI/CD workflow
     check_rate_limit(len(df))
-    # Apply `has_ci_cd` function concurrently
     with concurrent.futures.ThreadPoolExecutor() as executor:
         df["has_ci_cd"] = list(
             tqdm(
@@ -199,7 +178,6 @@ def analyze_repos(repos):
     # Q2: Top 10 repositories with the most commits
     most_commits = df.nlargest(10, "commits")
 
-    # Calculate the count of repositories that have tests and CI/CD for each language
     language_counts = df["language"].value_counts()
     tests_counts = df[df["has_tests"]]["language"].value_counts()
     cicd_counts = df[df["has_ci_cd"]]["language"].value_counts()
@@ -268,10 +246,8 @@ def plot_data(
 
 
 def main():
-    # make a list of dates from today to n_days ago
     dates = [datetime.date.today() - datetime.timedelta(days=i) for i in range(N_DAYS)]
 
-    # create an empty dictionary to store the results
     result = {
         "language_counts": pd.Series(dtype=int),
         "tests_counts": pd.Series(dtype=int),
@@ -282,14 +258,12 @@ def main():
         repos = fetch_repos(date)
         language_counts, tests_counts, cicd_counts = analyze_repos(repos)
 
-        # Accumulate the counts for each date
         result["language_counts"] = result["language_counts"].add(
             language_counts, fill_value=0
         )
         result["tests_counts"] = result["tests_counts"].add(tests_counts, fill_value=0)
         result["cicd_counts"] = result["cicd_counts"].add(cicd_counts, fill_value=0)
 
-        # Calculate the percentages after each loop
         data = {
             "language": [],
             "total nr": [],
@@ -309,10 +283,8 @@ def main():
 
         df = pd.DataFrame(data)
 
-        # Sort the DataFrame by "% that has tests" column
         df = df.sort_values("% that has tests", ascending=False)
 
-        # Save the DataFrame to a file after each loop
         df.to_csv("output/output.csv", index=False)
 
 
