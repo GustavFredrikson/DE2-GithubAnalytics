@@ -5,7 +5,7 @@ import pandas as pd
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 consumer = client.subscribe("TDDTopic", "my-subscription")
 
-df = pd.DataFrame(columns=["name", "has_ci_cd"])
+df = pd.DataFrame(columns=["name", "has_tests"])
 df.set_index("name", inplace=True)
 
 message_count = 0
@@ -16,7 +16,7 @@ while True:
         msg = consumer.receive()
         repo = json.loads(msg.data())
 
-        df.at[repo["name"], "has_ci_cd"] = repo["has_ci_cd"]
+        df.at[repo["name"], "has_tests"] = repo["has_tests"]
 
         message_count += 1
 
