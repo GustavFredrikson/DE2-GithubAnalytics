@@ -7,7 +7,7 @@ import concurrent.futures
 from decouple import config
 import swifter
 import time
-
+import os
 
 N_DAYS = 5
 
@@ -29,7 +29,7 @@ PER_PAGE = 100
 RATE_LIMIT_URL = "https://api.github.com/rate_limit"
 
 
-def check_rate_limit():
+def check_rate_limit(limit=1000):
     """
     Check the rate limit of the API.
     If the rate limit has been exceeded, sleeps until it resets.
@@ -39,11 +39,11 @@ def check_rate_limit():
     data = response.json()
     core_remaining = data["resources"]["core"]["remaining"]
     core_reset = data["resources"]["core"]["reset"]
-    if core_remaining < 1000:
+    if core_remaining < limit:
         sleep_time = core_reset - time.time()
         if sleep_time > 0:
             print(
-                f"Rate limit close to being exceeded. Sleeping for {sleep_time} seconds."
+                f"Rate limit close to being exceeded. Sleeping for {sleep_time} seconds, until {datetime.datetime.fromtimestamp(core_reset)}"
             )
             time.sleep(sleep_time)
     return core_remaining, core_reset
@@ -61,7 +61,7 @@ def fetch_repos(date):
 
     repos = []
     # use tqdm to make a while loop with a progress bar
-    for _ in tqdm(range(10), desc=f"Fetching repos for {date}"):
+    for _ in tqdm(range(1), desc=f"Fetching repos for {date}"):
         try:
             # Make the API request
             response = requests.get(BASE_URL, headers=HEADERS, params=params)
@@ -155,33 +155,55 @@ def analyze_repos(repos):
     language_counts = df["language"].value_counts()
     top_languages = language_counts.nlargest(10)
 
-
     # Check the rate limit before fetching the number of commits for each repository
-    check_rate_limit()
-    df["commits"] = df["full_name"].swifter.apply(fetch_commits_for_row)
+    check_rate_limit(limit=len(df))
+    # Fetch the number of commits for each repository
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        df["commits"] = list(
+            tqdm(
+                executor.map(fetch_commits_for_row, df.to_dict("records")),
+                total=len(df),
+            )
+        )
+
+    # Function to apply `has_tests` in a concurrent manner
+    def apply_has_tests(row):
+        return has_tests(row["full_name"])
 
     # Check the rate limit before checking if the repository has a 'tests' or 'test' directory
-    check_rate_limit()
-    df["has_tests"] = df["full_name"].swifter.apply(has_tests)
+    check_rate_limit(limit=len(df))
+    # Apply `has_tests` function concurrently
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        df["has_tests"] = list(
+            tqdm(
+                executor.map(apply_has_tests, df.to_dict("records")),
+                total=len(df),
+            )
+        )
+
+    # Function to apply `has_ci_cd` in a concurrent manner
+    def apply_has_ci_cd(row):
+        return has_ci_cd(row["full_name"])
 
     # Check the rate limit before checking if the repository has a CI/CD workflow
-    check_rate_limit()
-    df["has_ci_cd"] = df["full_name"].swifter.apply(has_ci_cd)
+    check_rate_limit(len(df))
+    # Apply `has_ci_cd` function concurrently
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        df["has_ci_cd"] = list(
+            tqdm(
+                executor.map(apply_has_ci_cd, df.to_dict("records")),
+                total=len(df),
+            )
+        )
 
     # Q2: Top 10 repositories with the most commits
     most_commits = df.nlargest(10, "commits")
-    # Filter repositories with tests
-    df_with_tests = df[df["has_tests"] == True]
 
-    # Q3: Top 10 programming languages that follow the test-driven development approach
-    top_languages_tests = df_with_tests["language"].value_counts().nlargest(10)
+    print(df)
 
-    # Filter repositories with CI/CD workflow
-    df_with_tests_and_ci_cd = df_with_tests[df_with_tests["has_ci_cd"] == True]
-
-    # Q4: Top 10 programming languages that follow test-driven development and DevOps approach
+    top_languages_tests = df[df["has_tests"]]["language"].value_counts().nlargest(10)
     top_languages_tests_ci_cd = (
-        df_with_tests_and_ci_cd["language"].value_counts().nlargest(10)
+        df[df["has_ci_cd"]]["language"].value_counts().nlargest(10)
     )
 
     return top_languages, most_commits, top_languages_tests, top_languages_tests_ci_cd
@@ -266,23 +288,30 @@ def main():
             num_repos_with_ci_cd,
         ) = analyze_repos(repos)
 
-        # Append the data to result_df
-        result_df = result_df.append(
-            {
-                "date": date,
-                "top_languages": top_languages,
-                "most_frequently_updated": most_frequently_updated,
-                "num_repos_with_tests": num_repos_with_tests,
-                "num_repos_with_ci_cd": num_repos_with_ci_cd,
-            },
-            ignore_index=True,
+        # Check if the file exists and set the header option accordingly
+        header_option_tests = not os.path.exists("output/num_repos_with_tests.csv")
+        header_option_ci_cd = not os.path.exists("output/num_repos_with_ci_cd.csv")
+
+        # Convert the series to DataFrame before saving to csv
+        num_repos_with_tests_df = pd.DataFrame(
+            num_repos_with_tests, columns=["language", "count"]
+        )
+        num_repos_with_ci_cd_df = pd.DataFrame(
+            num_repos_with_ci_cd, columns=["language", "count"]
         )
 
-        # Save result_df to a CSV file
-        result_df.to_csv("results.csv", index=False)
-
-    # Plot the data
-    plot_data(result_df)
+        num_repos_with_ci_cd_df.to_csv(
+            "output/num_repos_with_ci_cd.csv",
+            index=False,
+            mode="a",
+            header=header_option_ci_cd,
+        )
+        num_repos_with_tests_df.to_csv(
+            "output/num_repos_with_tests.csv",
+            index=False,
+            mode="a",
+            header=header_option_tests,
+        )
 
 
 if __name__ == "__main__":
