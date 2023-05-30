@@ -5,8 +5,11 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import concurrent.futures
 from decouple import config
+import swifter
+import time
 
-N_DAYS = 1
+
+N_DAYS = 5
 
 # Your GitHub personal access token, from .env
 TOKEN = config("GITHUB_API_TOKEN")
@@ -23,6 +26,27 @@ HEADERS = {
 
 # The maximum number of results per page
 PER_PAGE = 100
+RATE_LIMIT_URL = "https://api.github.com/rate_limit"
+
+
+def check_rate_limit():
+    """
+    Check the rate limit of the API.
+    If the rate limit has been exceeded, sleeps until it resets.
+    """
+    response = requests.get(RATE_LIMIT_URL, headers=HEADERS)
+    response.raise_for_status()
+    data = response.json()
+    core_remaining = data["resources"]["core"]["remaining"]
+    core_reset = data["resources"]["core"]["reset"]
+    if core_remaining < 1000:
+        sleep_time = core_reset - time.time()
+        if sleep_time > 0:
+            print(
+                f"Rate limit close to being exceeded. Sleeping for {sleep_time} seconds."
+            )
+            time.sleep(sleep_time)
+    return core_remaining, core_reset
 
 
 def fetch_repos(date):
@@ -105,34 +129,24 @@ def fetch_commits_for_row(row):
 
 
 def analyze_repos(repos):
-    # Convert the list of repos to a DataFrame
-    df = pd.DataFrame(repos)
-
-    # Fetch the number of commits for each repository
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        df["commits"] = list(
-            tqdm(
-                executor.map(fetch_commits_for_row, df.to_dict("records")),
-                total=len(df),
-            )
-        )
-
     # Check if the repository has a 'tests' or 'test' directory
     def has_tests(repo_name):
-        contents_url = f'https://api.github.com/repos/{repo_name}/contents'
+        contents_url = f"https://api.github.com/repos/{repo_name}/contents"
         contents_response = requests.get(contents_url, headers=HEADERS)
         contents_data = contents_response.json()
-        return isinstance(contents_data, list) and any(content['name'].lower() in {'tests', 'test'} for content in contents_data)
+        return isinstance(contents_data, list) and any(
+            content["name"].lower() in {"tests", "test"} for content in contents_data
+        )
 
-    df["has_tests"] = df["full_name"].apply(has_tests)
     # Check if the repository has a CI/CD workflow
     def has_ci_cd(repo_name):
-        workflows_url = f'https://api.github.com/repos/{repo_name}/actions/workflows'
+        workflows_url = f"https://api.github.com/repos/{repo_name}/actions/workflows"
         workflows_response = requests.get(workflows_url, headers=HEADERS)
         workflows_data = workflows_response.json()
-        return any('ci' in workflow['name'].lower() or 'cd' in workflow['name'].lower() for workflow in workflows_data.get('workflows', []))
-
-    df["has_ci_cd"] = df["full_name"].apply(has_ci_cd)
+        return any(
+            "ci" in workflow["name"].lower() or "cd" in workflow["name"].lower()
+            for workflow in workflows_data.get("workflows", [])
+        )
 
     # Q1: Top 10 programming languages based on the number of projects developed
     language_counts = df["language"].value_counts()
@@ -141,16 +155,41 @@ def analyze_repos(repos):
     # Q2: Top 10 repositories with the most commits
     most_commits = df.nlargest(10, "commits")
 
-    # Q3: Number of repositories with 'tests' or 'test' directory
-    num_repos_with_tests = df["has_tests"].sum()
+    # Convert the list of repos to a DataFrame
+    df = pd.DataFrame(repos)
 
-    # Q4: Number of repositories with CI/CD workflow
-    num_repos_with_ci_cd = df["has_ci_cd"].sum()
+    # Check the rate limit before fetching the number of commits for each repository
+    check_rate_limit()
+    df["commits"] = df["full_name"].swifter.apply(fetch_commits_for_row)
 
-    return top_languages, most_commits, num_repos_with_tests, num_repos_with_ci_cd
+    # Check the rate limit before checking if the repository has a 'tests' or 'test' directory
+    check_rate_limit()
+    df["has_tests"] = df["full_name"].swifter.apply(has_tests)
+
+    # Check the rate limit before checking if the repository has a CI/CD workflow
+    check_rate_limit()
+    df["has_ci_cd"] = df["full_name"].swifter.apply(has_ci_cd)
+
+    # Filter repositories with tests
+    df_with_tests = df[df["has_tests"] == True]
+
+    # Q3: Top 10 programming languages that follow the test-driven development approach
+    top_languages_tests = df_with_tests["language"].value_counts().nlargest(10)
+
+    # Filter repositories with CI/CD workflow
+    df_with_tests_and_ci_cd = df_with_tests[df_with_tests["has_ci_cd"] == True]
+
+    # Q4: Top 10 programming languages that follow test-driven development and DevOps approach
+    top_languages_tests_ci_cd = (
+        df_with_tests_and_ci_cd["language"].value_counts().nlargest(10)
+    )
+
+    return top_languages, most_commits, top_languages_tests, top_languages_tests_ci_cd
 
 
-def plot_data(top_languages, most_commits):
+def plot_data(
+    top_languages, most_commits, num_repos_with_tests, num_repos_with_ci_cd, repos
+):
     # Q1: Plot the top 10 programming languages
     plt.figure()
     plt.bar(top_languages.index, top_languages.values)
@@ -169,30 +208,81 @@ def plot_data(top_languages, most_commits):
     plt.ylabel("Number of Commits")
     plt.savefig("top_10_repositories_with_most_commits.png")
 
+    # Q3: Plot the percentage of repositories with 'tests' or 'test' directory
+    plt.figure()
+    perc_repos_with_tests = (num_repos_with_tests / len(repos)) * 100
+    perc_repos_without_tests = 100 - perc_repos_with_tests
+    bars = plt.bar(["Yes", "No"], [perc_repos_with_tests, perc_repos_without_tests])
+    plt.title("Percentage of Repositories with 'tests' or 'test' Directory")
+    plt.xlabel("Has 'tests' or 'test' Directory")
+    plt.ylabel("Percentage of Repositories (%)")
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(
+            bar.get_x() + bar.get_width() / 2.0,
+            yval,
+            f"{yval:.2f}%",
+            ha="center",
+            va="bottom",
+        )
+    plt.savefig("percentage_of_repositories_with_tests_or_test_directory.png")
+
+    # Q4: Plot the percentage of repositories with CI/CD workflow
+    plt.figure()
+    perc_repos_with_ci_cd = (num_repos_with_ci_cd / len(repos)) * 100
+    perc_repos_without_ci_cd = 100 - perc_repos_with_ci_cd
+    bars = plt.bar(["Yes", "No"], [perc_repos_with_ci_cd, perc_repos_without_ci_cd])
+    plt.title("Percentage of Repositories with CI/CD Workflow")
+    plt.xlabel("Has CI/CD Workflow")
+    plt.ylabel("Percentage of Repositories (%)")
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(
+            bar.get_x() + bar.get_width() / 2.0,
+            yval,
+            f"{yval:.2f}%",
+            ha="center",
+            va="bottom",
+        )
+    plt.savefig("percentage_of_repositories_with_ci_cd_workflow.png")
+
 
 def main():
     # make a list of dates from today to n_days ago
-    dates = [datetime.date.today() - datetime.timedelta(days=i)
-             for i in range(N_DAYS)]
+    dates = [datetime.date.today() - datetime.timedelta(days=i) for i in range(N_DAYS)]
 
-    # Fetch the repos created or updated on each date
-    repos = [fetch_repos(date) for date in dates]
+    # create an empty dataframe to store the results
+    result_df = pd.DataFrame()
 
-    # Flatten the list of lists
-    repos = [repo for sublist in repos for repo in sublist]
+    for date in dates:
+        # Fetch the repos created or updated on this date
+        repos = fetch_repos(date)
 
-    # Analyze the repos
-    top_languages, most_frequently_updated, num_repos_with_tests, num_repos_with_ci_cd = analyze_repos(
-        repos)
+        # Analyze the repos
+        (
+            top_languages,
+            most_frequently_updated,
+            num_repos_with_tests,
+            num_repos_with_ci_cd,
+        ) = analyze_repos(repos)
+
+        # Append the data to result_df
+        result_df = result_df.append(
+            {
+                "date": date,
+                "top_languages": top_languages,
+                "most_frequently_updated": most_frequently_updated,
+                "num_repos_with_tests": num_repos_with_tests,
+                "num_repos_with_ci_cd": num_repos_with_ci_cd,
+            },
+            ignore_index=True,
+        )
+
+        # Save result_df to a CSV file
+        result_df.to_csv("results.csv", index=False)
 
     # Plot the data
-    plot_data(top_languages, most_frequently_updated)
-
-    # Print the additional results
-    print(
-        f"Number of repositories with 'tests' or 'test' directory: {num_repos_with_tests}")
-    print(
-        f"Number of repositories with CI/CD workflow: {num_repos_with_ci_cd}")
+    plot_data(result_df)
 
 
 if __name__ == "__main__":
