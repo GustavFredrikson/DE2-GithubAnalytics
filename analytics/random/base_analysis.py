@@ -199,14 +199,12 @@ def analyze_repos(repos):
     # Q2: Top 10 repositories with the most commits
     most_commits = df.nlargest(10, "commits")
 
-    print(df)
+    # Calculate the count of repositories that have tests and CI/CD for each language
+    language_counts = df["language"].value_counts()
+    tests_counts = df[df["has_tests"]]["language"].value_counts()
+    cicd_counts = df[df["has_ci_cd"]]["language"].value_counts()
 
-    top_languages_tests = df[df["has_tests"]]["language"].value_counts().nlargest(10)
-    top_languages_tests_ci_cd = (
-        df[df["has_ci_cd"]]["language"].value_counts().nlargest(10)
-    )
-
-    return top_languages, most_commits, top_languages_tests, top_languages_tests_ci_cd
+    return language_counts, tests_counts, cicd_counts
 
 
 def plot_data(
@@ -273,45 +271,49 @@ def main():
     # make a list of dates from today to n_days ago
     dates = [datetime.date.today() - datetime.timedelta(days=i) for i in range(N_DAYS)]
 
-    # create an empty dataframe to store the results
-    result_df = pd.DataFrame()
+    # create an empty dictionary to store the results
+    result = {
+        "language_counts": pd.Series(dtype=int),
+        "tests_counts": pd.Series(dtype=int),
+        "cicd_counts": pd.Series(dtype=int),
+    }
 
     for date in dates:
-        # Fetch the repos created or updated on this date
         repos = fetch_repos(date)
+        language_counts, tests_counts, cicd_counts = analyze_repos(repos)
 
-        # Analyze the repos
-        (
-            top_languages,
-            most_frequently_updated,
-            num_repos_with_tests,
-            num_repos_with_ci_cd,
-        ) = analyze_repos(repos)
+        # Accumulate the counts for each date
+        result["language_counts"] = result["language_counts"].add(
+            language_counts, fill_value=0
+        )
+        result["tests_counts"] = result["tests_counts"].add(tests_counts, fill_value=0)
+        result["cicd_counts"] = result["cicd_counts"].add(cicd_counts, fill_value=0)
 
-        # Check if the file exists and set the header option accordingly
-        header_option_tests = not os.path.exists("output/num_repos_with_tests.csv")
-        header_option_ci_cd = not os.path.exists("output/num_repos_with_ci_cd.csv")
+        # Calculate the percentages after each loop
+        data = {
+            "language": [],
+            "total nr": [],
+            "% that has tests": [],
+            "% that has cicd": [],
+        }
+        for language in result["language_counts"].index:
+            data["language"].append(language)
+            total = result["language_counts"][language]
+            data["total nr"].append(total)
+            data["% that has tests"].append(
+                result["tests_counts"].get(language, 0) / total * 100
+            )
+            data["% that has cicd"].append(
+                result["cicd_counts"].get(language, 0) / total * 100
+            )
 
-        # Convert the series to DataFrame before saving to csv
-        num_repos_with_tests_df = pd.DataFrame(
-            num_repos_with_tests, columns=["language", "count"]
-        )
-        num_repos_with_ci_cd_df = pd.DataFrame(
-            num_repos_with_ci_cd, columns=["language", "count"]
-        )
+        df = pd.DataFrame(data)
 
-        num_repos_with_ci_cd_df.to_csv(
-            "output/num_repos_with_ci_cd.csv",
-            index=False,
-            mode="a",
-            header=header_option_ci_cd,
-        )
-        num_repos_with_tests_df.to_csv(
-            "output/num_repos_with_tests.csv",
-            index=False,
-            mode="a",
-            header=header_option_tests,
-        )
+        # Sort the DataFrame by "% that has tests" column
+        df = df.sort_values("% that has tests", ascending=False)
+
+        # Save the DataFrame to a file after each loop
+        df.to_csv("output/output.csv", index=False)
 
 
 if __name__ == "__main__":
