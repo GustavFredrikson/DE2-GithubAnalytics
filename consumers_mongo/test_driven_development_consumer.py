@@ -7,7 +7,7 @@ client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 consumer = client.subscribe("TDDTopic", "my-subscription")
 
 # Mongodb
-mongo_client = MongoClient("mongodb://mongodb_host:mongodb_port/")
+mongo_client = MongoClient("mongodb://mongodb_host:27017/")
 db = mongo_client.your_database
 collection = db.tdd
 
