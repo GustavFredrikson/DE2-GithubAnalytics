@@ -15,6 +15,11 @@ HEADERS = {
 }
 PER_PAGE = 100
 
+
+# If we want to benchmark the script, we can set this to 
+#the number of times we want to duplicate the results
+PULSAR_BENCHMARK=10
+
 # Pulsar client
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
@@ -83,15 +88,24 @@ def fetch_repos(date):
 
 
 if __name__ == "__main__":
+
+    with open("mrp_time_start", "w") as f:
+        f.write(str(time.time()))   
     min_date = datetime.date(2021, 1, 1)  # set to oldest date we want to use
 
     date = datetime.date.today()
 
     while date >= min_date:
         repos = fetch_repos(date)
-        for repo in repos:
-            producer.send(json.dumps(repo).encode("utf-8"))
+        for _ in range(PULSAR_BENCHMARK) if PULSAR_BENCHMARK >= 1 else range(1):
+            for repo in repos:
+                producer.send(json.dumps(repo).encode("utf-8"))
+        if PULSAR_BENCHMARK >= 1:
+            print(f"Sent {len(repos)*PULSAR_BENCHMARK} messages for {date}")
+            break
 
         date -= datetime.timedelta(days=1)
 
     client.close()
+    with open("mrp_time_end", "w") as f:
+        f.write(str(time.time()))

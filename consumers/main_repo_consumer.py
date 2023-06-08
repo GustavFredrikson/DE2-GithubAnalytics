@@ -1,4 +1,5 @@
 import pulsar
+import time
 import json
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
@@ -10,6 +11,10 @@ producer_updates = client.create_producer("FrequentlyUpdatedProjectsTopic")
 producer_tdd = client.create_producer("TestDrivenDevelopmentTopic")
 producer_devops = client.create_producer("DevopsTopic")
 
+
+TERMINATE_AFTER_N_MESSAGES = 10000
+
+n_messages = 0
 while True:
     try:
         msg = consumer.receive()
@@ -23,6 +28,9 @@ while True:
 
         # Acknowledge processing of message so that it can be deleted
         consumer.acknowledge(msg)
+        n += 1
+        if n_messages >= TERMINATE_AFTER_N_MESSAGES:
+            break
     except Exception as e:
         print("Error: ", e)
 

@@ -17,7 +17,7 @@ persistence: true
 volumes:
   persistence: true
 
-  storageClassName: local-path
+  storageClassName: standard
 
 
 
@@ -47,7 +47,7 @@ components:
 
   toolset: true
 
-  pulsar_manager: true
+  pulsar_manager: false
 
 extra:
   proxy: false
@@ -154,7 +154,7 @@ certs:
 
 zookeeper:
   component: zookeeper
-  replicaCount: 3
+  replicaCount: 1
   updateStrategy:
     type: RollingUpdate
   podManagementPolicy: Parallel
@@ -208,7 +208,7 @@ zookeeper:
     data:
       name: data
       size: 10Gi
-      storageClassName: local-path
+      storageClassName: standard
       selector: {}
   externalZookeeperServerList: ""
   configData:
@@ -237,7 +237,7 @@ bookkeeper:
   component: bookie
   metadata:
     resources:
-  replicaCount: 3
+  replicaCount: 1
   updateStrategy:
     type: RollingUpdate
   podManagementPolicy: Parallel
@@ -288,7 +288,7 @@ bookkeeper:
     journal:
       name: journal
       size: 5Gi
-      storageClassName: local-path
+      storageClassName: standard
       selector: {}
       useMultiVolumes: false
       multiVolumes:
@@ -301,23 +301,23 @@ bookkeeper:
     ledgers:
       name: ledgers
       size: 5Gi
-      storageClassName: local-path
+      storageClassName: standard
       useMultiVolumes: false
       multiVolumes:
         - name: ledgers0
           size: 10Gi
-          storageClassName: local-path
+          storageClassName: standard
           mountPath: /pulsar/data/bookkeeper/ledgers0
         - name: ledgers1
           size: 10Gi
-          storageClassName: local-path
+          storageClassName: standard
           mountPath: /pulsar/data/bookkeeper/ledgers1
 
     useSingleCommonVolume: false
     common:
       name: common
       size: 20Gi
-      storageClassName: local-path
+      storageClassName: standard
 
   configData:
     PULSAR_MEM: >

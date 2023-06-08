@@ -1,9 +1,12 @@
 import pulsar
+import time
 import json
 import pandas as pd
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
+with open('plc_time_start', 'w') as f:
+    f.write(str(time.time()))
 consumer = client.subscribe("LanguagesTopic", "my-subscription")
 
 df = pd.DataFrame(columns=["language", "count"])
@@ -36,6 +39,7 @@ try:
             df.sort_values(by="count", ascending=False, inplace=True)
             df.to_csv("top_languages.csv")
 
+
         consumer.acknowledge(msg)
 
 except Exception as e:
@@ -43,3 +47,5 @@ except Exception as e:
 
 finally:
     client.close()
+with open('plc_time_end', 'w') as f:
+    f.write(str(time.time()))
