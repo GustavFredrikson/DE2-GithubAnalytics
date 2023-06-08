@@ -13,13 +13,24 @@ declare -A PRODUCER_PODS=(
   ["test-driven-development-producer-pod"]="producers/test_driven_development_producer.py"
 )
 
-declare -A CONSUMER_PODS=(
-  ["main-repo-consumer-pod"]="consumers/main_repo_consumer.py"
-  ["frequently-updated-projects-consumer-pod"]="consumers/frequently_updated_projects_consumer.py"
-  ["programming-languages-consumer-pod"]="consumers/programming_languages_consumer.py"
-  ["devops-consumer-pod"]="consumers/devops_consumer.py"
-  ["test-driven-development-consumer-pod"]="consumers/test_driven_development_consumer.py"
-)
+if [[ $1 == "--use-mongo" ]]; then
+    CONSUMER_PODS=(
+        ["main-repo-consumer-pod"]="consumers_mongo/main_repo_consumer.py"
+        ["frequently-updated-projects-consumer-pod"]="consumers_mongo/frequently_updated_projects_consumer.py"
+        ["programming-languages-consumer-pod"]="consumers_mongo/programming_languages_consumer.py"
+        ["devops-consumer-pod"]="consumers_mongo/devops_consumer.py"
+        ["test-driven-development-consumer-pod"]="consumers_mongo/test_driven_development_consumer.py"
+    )
+else
+    CONSUMER_PODS=(
+        ["main-repo-consumer-pod"]="consumers/main_repo_consumer.py"
+        ["frequently-updated-projects-consumer-pod"]="consumers/frequently_updated_projects_consumer.py"
+        ["programming-languages-consumer-pod"]="consumers/programming_languages_consumer.py"
+        ["devops-consumer-pod"]="consumers/devops_consumer.py"
+        ["test-driven-development-consumer-pod"]="consumers/test_driven_development_consumer.py"
+    )
+fi
+
 
 # Function to create a pod, copy a script to it, and run the script
 function create_and_run_pod {

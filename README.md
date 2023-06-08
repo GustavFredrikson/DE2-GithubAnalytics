@@ -1,5 +1,9 @@
 # DE2-GithubAnalytics
 
+To start the pods with consumers/producers, run the following commands (with flag --use-mongo to use mongoDB)
+```bash
+./run_all.sh --use-mongo
+```
 
 To get the data from the pods, run the following commands:
 ```bash
