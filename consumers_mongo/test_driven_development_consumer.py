@@ -14,6 +14,10 @@ collection = db.tdd
 message_count = 0
 save_interval = 100
 
+
+TERMINATE_AFTER_N_MESSAGES = 10000
+
+n_messages = 0
 while True:
     try:
         msg = consumer.receive()
@@ -34,6 +38,9 @@ while True:
                 print(f'Repo Name: {data["name"]}, Has Tests: {data["has_tests"]}')
 
         consumer.acknowledge(msg)
+        n_messages += 1
+        if n_messages >= TERMINATE_AFTER_N_MESSAGES:
+            break
     except Exception as e:
         print("Error: ", e)
 

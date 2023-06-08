@@ -53,7 +53,7 @@ function create_and_run_pod {
 
     # Run the script in the pod
     echo "Running script $SCRIPT_NAME in pod $POD_NAME..."
-    kubectl exec $POD_NAME -n $NAMESPACE -- /bin/bash -c "python /tmp/$(basename $SCRIPT_NAME)" &
+    nohup kubectl exec $POD_NAME -n $NAMESPACE -- /bin/bash -c "python /tmp/$(basename $SCRIPT_NAME)" > ./$POD_NAME.log &
   done
 }
 

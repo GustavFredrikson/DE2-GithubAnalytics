@@ -2,6 +2,7 @@ import pulsar
 import time
 import json
 import pandas as pd
+from decouple import config
 
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
 
@@ -17,6 +18,12 @@ df["count"] = df["count"].astype("int")
 message_count = 0
 save_interval = 1000
 
+TERMINATE_AFTER_N_MESSAGES = config("TERMINATE_AFTER_N_MESSAGES", cast=int, default=1000)
+
+n_messages = 0
+
+with open('plc_time_start', 'w') as f:
+    f.write(str(time.time()))
 try:
     while True:
         msg = consumer.receive()
@@ -41,11 +48,14 @@ try:
 
 
         consumer.acknowledge(msg)
+        n_messages += 1
+        if n_messages >= TERMINATE_AFTER_N_MESSAGES:
+            break
 
 except Exception as e:
     print("Error: ", e)
 
 finally:
+    with open('plc_time_end', 'w') as f:
+        f.write(str(time.time()))
     client.close()
-with open('plc_time_end', 'w') as f:
-    f.write(str(time.time()))

@@ -29,7 +29,7 @@ function create_and_run_pod {
 
     # Delete the pod if it already exists
     echo "Deleting pod $POD_NAME if it already exists..."
-    kubectl delete pod $POD_NAME --namespace=$NAMESPACE --ignore-not-found=true
+    kubectl delete pod $POD_NAME --namespace=$NAMESPACE --ignore-not-found=true &
 
   done
 }

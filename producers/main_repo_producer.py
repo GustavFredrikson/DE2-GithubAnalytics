@@ -18,7 +18,7 @@ PER_PAGE = 100
 
 # If we want to benchmark the script, we can set this to 
 #the number of times we want to duplicate the results
-PULSAR_BENCHMARK=10
+PULSAR_BENCHMARK=100000
 
 # Pulsar client
 client = pulsar.Client("pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650")
@@ -88,7 +88,6 @@ def fetch_repos(date):
 
 
 if __name__ == "__main__":
-
     with open("mrp_time_start", "w") as f:
         f.write(str(time.time()))   
     min_date = datetime.date(2021, 1, 1)  # set to oldest date we want to use

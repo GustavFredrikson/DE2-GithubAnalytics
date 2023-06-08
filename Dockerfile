@@ -2,11 +2,13 @@
 # Start with a base image containing Python runtime
 FROM python:3.8-slim-buster
 
+ENV PYTHONUNBUFFERED=1
 # The maintainer email
 LABEL maintainer="gustavfredrikson@gmail.com"
 
 # Set the working directory in the Docker image
 WORKDIR /tmp
+
 
 ADD requirements.txt /tmp
 
