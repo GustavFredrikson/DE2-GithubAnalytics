@@ -1,4 +1,5 @@
 import pulsar
+import os
 import time
 import json
 from decouple import config
@@ -14,6 +15,7 @@ producer_devops = client.create_producer("DevopsTopic")
 
 
 TERMINATE_AFTER_N_MESSAGES = config("TERMINATE_AFTER_N_MESSAGES", cast=int, default=1000)*2
+print(f"Will terminate after {TERMINATE_AFTER_N_MESSAGES} messages")
 
 n_messages = 0
 while True:

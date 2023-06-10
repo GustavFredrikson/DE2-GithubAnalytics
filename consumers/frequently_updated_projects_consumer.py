@@ -1,4 +1,5 @@
 import pulsar
+import os
 import time
 import json
 import pandas as pd
@@ -20,6 +21,7 @@ message_count = 0
 save_interval = 100
 
 TERMINATE_AFTER_N_MESSAGES = config('TERMINATE_AFTER_N_MESSAGES', cast=int, default=1000)
+print(f"Will terminate after {TERMINATE_AFTER_N_MESSAGES} messages")
 n_messages = 0
 with open("fupc_start", "w") as f:
     f.write(str(time.time()))
@@ -71,3 +73,4 @@ while True:
 with open("fupc_end", "w") as f:
     f.write(str(time.time()))
 client.close()
+#Kill pod

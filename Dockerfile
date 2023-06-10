@@ -3,14 +3,14 @@
 FROM python:3.8-slim-buster
 
 ENV PYTHONUNBUFFERED=1
+ENV GITHUB_API_TOKEN=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
+ENV TERMINATE_AFTER_N_MESSAGES=10
 # The maintainer email
 LABEL maintainer="gustavfredrikson@gmail.com"
 
 # Set the working directory in the Docker image
-WORKDIR /tmp
+WORKDIR /app
 
-
-ADD requirements.txt /tmp
 
 # Install system level dependencies for pycairo and systemd
 RUN apt-get update && apt-get install -y \
@@ -21,5 +21,8 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     libsystemd-dev
 
+ENV PYTHONUNBUFFERED=1
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+

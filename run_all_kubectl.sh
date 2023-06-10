@@ -3,7 +3,7 @@
 NAMESPACE="default"
 
 # Docker image name
-IMAGE="gustavfredrikson/de2python"
+IMAGE="bjornmosten/aigrep:de2-latest"
 
 declare -A PRODUCER_PODS=(
   ["main-repo-producer-pod"]="producers/main_repo_producer.py"
@@ -33,27 +33,27 @@ function create_and_run_pod {
 
     # Create the pod
     echo "Creating pod $POD_NAME..."
-    kubectl run $POD_NAME --namespace=$NAMESPACE --image=$IMAGE --restart=Never -- sleep infinity
+    kubectl run $POD_NAME --namespace=$NAMESPACE --image=$IMAGE --restart=Never --env="SCRIPT=$SCRIPT_NAME"
 
-    # Wait for the pod to be ready
-    echo "Waiting for pod $POD_NAME to be ready..."
-    kubectl wait --namespace=$NAMESPACE --for=condition=ready pod/$POD_NAME --timeout=120s
+    ## Wait for the pod to be ready
+    #echo "Waiting for pod $POD_NAME to be ready..."
+    #kubectl wait --namespace=$NAMESPACE --for=condition=ready pod/$POD_NAME --timeout=120s
 
-    # List the available pods
-    echo "Listing all available pods..."
-    kubectl get pods --namespace=$NAMESPACE
+    ## List the available pods
+    #echo "Listing all available pods..."
+    #kubectl get pods --namespace=$NAMESPACE
 
-    # Copy the script to the pod
-    echo "Copying script $SCRIPT_NAME to pod $POD_NAME..."
-    kubectl cp $SCRIPT_NAME $NAMESPACE/$POD_NAME:/tmp/$(basename $SCRIPT_NAME)
+    ## Copy the script to the pod
+    #echo "Copying script $SCRIPT_NAME to pod $POD_NAME..."
+    #kubectl cp $SCRIPT_NAME $NAMESPACE/$POD_NAME:/tmp/$(basename $SCRIPT_NAME)
 
-    # Copy .env to the pod
-    echo "Copying .env to pod $POD_NAME..."
-    kubectl cp .env $NAMESPACE/$POD_NAME:/tmp/.env
+    ## Copy .env to the pod
+    #echo "Copying .env to pod $POD_NAME..."
+    #kubectl cp .env $NAMESPACE/$POD_NAME:/tmp/.env
 
-    # Run the script in the pod
-    echo "Running script $SCRIPT_NAME in pod $POD_NAME..."
-    nohup kubectl exec $POD_NAME -n $NAMESPACE -- /bin/bash -c "python /tmp/$(basename $SCRIPT_NAME)" > ./$POD_NAME.log &
+    ## Run the script in the pod
+    #echo "Running script $SCRIPT_NAME in pod $POD_NAME..."
+    #kubectl exec $POD_NAME -n $NAMESPACE -- /sbin/init -c "python /tmp/$(basename $SCRIPT_NAME)" &
   done
 }
 

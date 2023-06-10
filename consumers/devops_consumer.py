@@ -1,4 +1,5 @@
 import pulsar
+import os
 import time
 import json
 import pandas as pd
@@ -18,6 +19,7 @@ save_interval = 100
 
 
 TERMINATE_AFTER_N_MESSAGES = config("TERMINATE_AFTER_N_MESSAGES", cast=int, default=1000)
+print(f"Will terminate after {TERMINATE_AFTER_N_MESSAGES} messages")
 
 with open('dc_start', 'w') as f:
     f.write(str(time.time()))
